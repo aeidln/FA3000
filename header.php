@@ -36,8 +36,8 @@
 			</div>
 			<div class="dropdown"><a href="">Ваши цели</a><i class="-hover"></i>
 				<ul class="dropdown-list">
-					<li><a href="">Снижение веса</a></li>
-					<li><a href="">Увеличение мышечной массы</a></li>
+					<li><a href="Loss_weight.php">Снижение веса</a></li>
+					<li><a href="Musclues.php">Увеличение мышечной массы</a></li>
 					<li><a href="">Реабилитация</a></li>
 				</ul>
 			</div>

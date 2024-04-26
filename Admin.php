@@ -1,14 +1,4 @@
-<?php
-session_start(); // Инициализация сессии                
-// Проверка, авторизован ли пользователь
-if (!isset($_SESSION['Email'])) {
-    header("Location: Index.php"); // Если не авторизован, перенаправляем на страницу входа
-    exit();
-}
-if ($_SESSION['Status'] != 10) {
-    header("Location: Index.php");
-}
-?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -22,7 +12,7 @@ if ($_SESSION['Status'] != 10) {
 </head>
 
 <body>
-    <?php require_once('header.php'); ?>
+    <?php require_once ('header.php'); ?>
     <div class="container">
         <div class="block">
 
@@ -53,7 +43,7 @@ if ($_SESSION['Status'] != 10) {
                         </tr>
                     </thead>
                     <tbody id="b_usr">
-                        <? require_once("b_usr.php"); ?>
+                        <? require_once ("b_usr.php"); ?>
                     </tbody>
                 </table>
             </div>
@@ -70,7 +60,7 @@ if ($_SESSION['Status'] != 10) {
                         </tr>
                     </thead>
                     <tbody id="b_z_pr">
-                        <? require_once("b_z_pr.php"); ?>
+                        <? require_once ("b_z_pr.php"); ?>
 
                     </tbody>
                 </table>
@@ -86,7 +76,7 @@ if ($_SESSION['Status'] != 10) {
                         </tr>
                     </thead>
                     <tbody id="b_z_vp">
-                        <? require_once("b_z_vp.php"); ?>
+                        <? require_once ("b_z_vp.php"); ?>
                     </tbody>
                 </table>
                 <h3>Заявки на покупку клубной карты</h3>
@@ -102,7 +92,7 @@ if ($_SESSION['Status'] != 10) {
                         </tr>
                     </thead>
                     <tbody id="b_z_card">
-                        <? require_once("b_z_card.php"); ?>
+                        <? require_once ("b_z_card.php"); ?>
 
                     </tbody>
                 </table>
@@ -111,35 +101,25 @@ if ($_SESSION['Status'] != 10) {
             <div class="adm_body">
                 <h3>Тренеры</h3>
                 <div>
-                    
-                    <?php
-                    $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-                    mysqli_select_db($link, "db") or die("А нет такой бд!");
-                    $rows = mysqli_query($link, "SELECT t.ID, u.FIO from trainers t, users u where t.ID=u.ID");
-                    echo "<select id=\"tr_names\" onchange=\"myFunction()\">";
-                    echo "<option>Выберите тренера</option>";
-                    while ($tr = mysqli_fetch_array($rows)) {  
-                        
-                        echo "<option value='".$tr['ID']."'>" .$tr['FIO']."</option>";
-                        
-                    } 
-                    echo "</select>";?>
-                    <button class="button"><img class="a_b" src="Resources/add_tr.png"></button>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>День недели</th>
-                                <th>Начало рабочего дня</th>
-                                <th>Конец рабочего дня</th>
-                            </tr>
-                        </thead>
-                    <tbody id="b_tr">
-                    <? require_once("tr_table.php"); ?>
+                    <div class="tr_r">
 
-                    </tbody>
-                       
-                    </table>
-                    <button class="button">Сохранить</button>
+                        <?php
+                        $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
+                        mysqli_select_db($link, "db") or die("А нет такой бд!");
+                        $rows = mysqli_query($link, "SELECT t.ID, u.FIO from trainers t, users u where t.ID=u.ID");
+                        echo "<select id=\"tr_names\" onchange=\"myFunction()\">";
+                        echo "<option>Выберите тренера</option>";
+                        while ($tr = mysqli_fetch_array($rows)) {
+                            echo "<option value='" . $tr['ID'] . "'>" . $tr['FIO'] . "</option>";
+                        }
+                        echo "</select>"; ?>
+                        <button class="button"><img class="a_b" src="Resources/add_tr.png"></button>
+
+                        <table id="b_tr">
+
+                            <? require_once ("tr_table.php"); ?>
+                        </table>
+                    </div>
 
                 </div>
 
@@ -159,27 +139,43 @@ if ($_SESSION['Status'] != 10) {
                         </tr>
                     </thead>
                     <tbody id="b_rev">
-                        <? require_once("b_rev.php"); ?>
+                        <? require_once ("b_rev.php"); ?>
 
                     </tbody>
                 </table>
             </div>
             <div class="adm_body">
                 <h3>Клубные карты</h3>
-                <table class="tb_adm">
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>Тариф</th>
-                            <th>Дата начала</th>
-                            <th>Дата окончания</th>
-                            <th>Кол-во дней заморозки</th>
-                        </tr>
-                    </thead>
-                    <tbody id="b_card">
 
-                    </tbody>
-                </table>
+                <?php
+                $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
+                mysqli_select_db($link, "db") or die("А нет такой бд!");
+                $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Vid FROM club_cards c, users u where c.ID_tr=u.ID");
+
+                while ($cc = mysqli_fetch_array($rows)) {
+
+                    echo "<table class='tb_adm'><thead><tr>";
+                    echo "<th>Тариф</th>";
+                    echo " <th>Длительность</th>";
+                    echo "<th>Дата начала</th>";
+                    echo "<th>Дата окончания</th>";
+                    echo " <th>Вид</th>";
+                    echo " <th>Тренер</th>";
+                    echo "</tr></thead><tbody><tr>";
+                    if ($cc['Card_type'] == 1)
+                        echo "<td>STANDART";
+                    else if ($cc['Card_type'] == 2)
+                        echo "<td>VIP";
+                    echo "<td>" . $cc['Duration'] . " месяцев";
+                    echo "<td>" . $cc['Date_start'] . "<Br>";
+                    echo "<td>" . $cc['Date_end'] . "<Br>";
+                    echo "<td>" . $cc['Vid'] . "<Br>";
+                    echo "<td>" . $cc['FIO'] . "<Br>";
+                    echo "</tr></tbody></table>";
+
+                }
+
+                ?>
             </div>
             <div class="adm_body">
                 <h3>Редактирование текста</h3>
@@ -194,7 +190,7 @@ if ($_SESSION['Status'] != 10) {
                     echo "</form>";
                 }
                 ?>
-                <h3>Действующие акции</h3>
+                <!-- <h3>Действующие акции</h3> -->
                 <h3>Редактирование фотографий</h3>
                 <center>
                     <form method="post" enctype="multipart/form-data" action="download_f.php">
@@ -211,37 +207,41 @@ if ($_SESSION['Status'] != 10) {
             </div>
         </div>
     </div>
-    <?php require_once('footer.php'); ?>
+    <?php require_once ('footer.php'); ?>
 
 </body>
 
 </html>
-<?php
-echo "<script language='javascript'>
-document.getElementsByClassName(\"adm_body\")[0].style.display = \"block\";
-  function podt(id){
-  if(confirm('Желаете удалить фотографию?'))
-  window.location.replace(\"del_gal.php?ID=\"+id);
+<script language='javascript'>
+    // document.getElementsByClassName("adm_body")[0].style.display = "block";
+// window.sessionStorage.setItem('pan_btn', '1');
+//     window.sessionStorage.setItem('adm_body', '1');
+    const n = window.sessionStorage.getItem('pan_btn');
+    console.log(n);
+    document.getElementsByClassName("pan_btn")[n].style.border = "2px solid #da1717";
+	document.getElementsByClassName("adm_body")[n].style.display = "block";
+
+
+
+    function podt(id) {
+        if (confirm('Желаете удалить фотографию?'))
+            window.location.replace("del_gal.php?ID="+id);
 };
-</script>
-";
-?>
-<script>
-    function myFunction(){
+
+    function myFunction() {
         var n = document.getElementById("tr_names");
         var id = n.options[n.selectedIndex].value;
-        
         $.ajax({
             url: 'tr_table.php',         /* Куда отправить запрос */
             method: 'post',
             async: false,          /* Метод запроса (post или get) */
             // dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-            data: { id: id},     /* Данные передаваемые в массиве */
+            data: { id: id },     /* Данные передаваемые в массиве */
             success: function (php) {   /* функция которая будет выполнена после успешного запроса.  */
-                ("#b_tr").html(php); /* В переменной data содержится ответ от index.php. */
+                $("#b_tr").html(php); /* В переменной data содержится ответ от index.php. */
             }
         });
-        
+
     }
     function zav_z(id, f, type_c) {
         $.ajax({
@@ -251,7 +251,7 @@ document.getElementsByClassName(\"adm_body\")[0].style.display = \"block\";
             dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
             data: { id: id, f: f, type_c: type_c },     /* Данные передаваемые в массиве */
             success: function (data) {   /* функция которая будет выполнена после успешного запроса.  */
-                console.log(data); /* В переменной data содержится ответ от index.php. */
+                console.log(data);
             }
         });
         $.ajax({
@@ -282,6 +282,21 @@ document.getElementsByClassName(\"adm_body\")[0].style.display = \"block\";
                 $("#b_rev").html(php);
             }
         });
+    }
+    function ch_r(id, wd, f, val) {
+        console.log(id, wd, f, val);
+        $.ajax({
+            url: 'ch_r.php',         /* Куда отправить запрос */
+            method: 'post',
+            async: false,             /* Метод запроса (post или get) */
+            dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+            data: { id: id, wd: wd, f: f, val: val },     /* Данные передаваемые в массиве */
+            success: function (data) {  /* функция которая будет выполнена после успешного запроса.  */
+                console.log(data);
+                myFunction();/* В переменной data содержится ответ от index.php. */
+            }
+        });
+
     }
     function del(id, f) {
         $.ajax({

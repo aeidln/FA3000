@@ -5,8 +5,8 @@ if (!isset($_SESSION['Email'])) {
     header("Location: Index.php"); // Если не авторизован, перенаправляем на страницу входа
     exit();
 }
-if ($_SESSION['Status']!=1){
-    header("Location: Index.php"); 
+if ($_SESSION['Status'] != 1) {
+    header("Location: Index.php");
 }
 // Подключение к базе данных
 $servername = "localhost";
@@ -50,12 +50,12 @@ $conn->close();
                 <div class="lk_b1">
                     <?php
                     // Вывод информации о пользователе
-                   
+                    
                     echo "<h2>Здравствуйте,  $FIO !</h2>";
                     echo "<p>Email: $email</p>";
                     echo "<p>Номер телефона: $Number</p>";
                     echo "<p>Дата рождения: $birthdate</p>";
-                    
+
                     if ($status == 1) {
 
                     } elseif ($status == 10) {
@@ -72,63 +72,108 @@ $conn->close();
                     <h2>Расписание занятий</h2>
                     <img src="Resources/shedule.png">
                     <a href="Class_schedule.php">
-                    <button class="button">Расписание занятий</button>
-                </a>
+                        <button class="button">Расписание занятий</button>
+                    </a>
 
                 </div>
                 <div class="lk_b3">
                     <h2>Моя клубная карта</h2>
                     <?php
-                        $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-                        mysqli_select_db($link, "db") or die("А нет такой бд!");
-                        $rows = mysqli_query($link, "SELECT * FROM club_cards where ID_user=" . $ID);
-                        $сс = mysqli_fetch_array($rows);
-                        if (mysqli_num_rows($rows)<1) {
+                    $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
+                    mysqli_select_db($link, "db") or die("А нет такой бд!");
+                    $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Vid FROM club_cards c, users u where c.ID_tr=u.ID and ID_user=" . $ID);
+                    if (mysqli_num_rows($rows) < 1) {
                         echo "<p>У вас еще нет клубной карты</p>";
+                        echo "<a href=\"Club_cards.php\">";
+                        echo "<button class=\"button\">Выбрать подходящий тариф</button>";
+                        echo "</a>";
+                    } else {
+                        while ($cc = mysqli_fetch_array($rows)) {
+
+                            if ($cc['ID_tr'] == NULL) {
+                                echo "Ваш тариф - VIP. Выберите тренера для дальнейших тренировок:";
+                                $rows1 = mysqli_query($link, "SELECT t.ID, u.FIO from trainers t, users u where t.ID=u.ID");
+                                echo "<select id=\"tr_names\" onchange=\"ch_tr()\">";
+                                echo "<option>Выберите тренера</option>";
+                                while ($tr = mysqli_fetch_array($rows1)) {
+                                    echo "<option value='" . $tr['ID'] . "'>" . $tr['FIO'] . "</option>";
+                                }
+                                echo "</select><BR>";
+                                echo "<a href=\"Club_cards.php\">";
+                                echo "<button class=\"button\">Сохранить</button>";
+                                echo "</a>";
+                            } else {
+                                echo "<table class='cab_tb'><thead><tr>";
+                                echo "<th>Тариф</th>";
+                                echo " <th>Длительность</th>";
+                                echo "<th>Дата начала</th>";
+                                echo "<th>Дата окончания</th>";                                
+                                echo " <th>Вид</th>";
+                                echo " <th>Тренер</th>";
+                                echo "</tr></thead><tbody><tr>";
+                                if ($cc['Card_type'] == 1)
+                                    echo "<td>STANDART";
+                                else if ($cc['Card_type'] == 2)
+                                    echo "<td>VIP";
+
+                                echo "<td>" . $cc['Duration'] . " месяцев";
+                                echo "<td>" . $cc['Date_start'] . "<Br>";
+                                echo "<td>" . $cc['Date_end'] . "<Br>";
+                                echo "<td>" . $cc['Vid'] . "<Br>";
+                                echo "<td>" . $cc['FIO']. "<Br>";
+                                echo "</tr></tbody></table>";
+
+                                // echo $сс['Date_end'] ;
+                                // echo $сс['ID_tr'] ;
+                    
+
+                            }
                         }
+                    }
                     ?>
-                    <a href="Club_cards.php">
-                        <button class="button">Выбрать подходящий тариф</button>
-                    </a>
                 </div>
+
+
                 <div class="lk_b4">
                     <h2>Мои отзывы</h2>
                     <?php
-                        $rows = mysqli_query($link, "SELECT * FROM reviews where ID_user=" . $ID);
-                    
-                        if (mysqli_num_rows($rows)<1) {
-                            echo "<p>У вас пока нет отзывов</p>";
-                        } else {
-                    ?>
-                    <table class="">
-                        <thead>
-                            <tr>
-                                <th>№</th>
-                                <th>Оценка</th>
-                                <th>Комментарий</th>
-                                <th>Дата</th>
-                                <th>Cтатус обработки</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php              
-                        $k=1;
-                            while ($r = mysqli_fetch_array($rows)) {                                
-                                echo "<tr>";
-                                echo "<td>" . $k . "</td>";
-                                echo "<td>" . $r['Mark'] . "</td>";
-                                echo "<td>" . $r['Comment'] . "</td>";
-                                echo "<td>" . $r['Date'] . "</td>";
-                                $st = $r['Status'];
-                                if ($st == 1) echo "<td>Одобрен</td>";
-                                if ($st == 0) echo "<td>Не одобрен</td>";
-                                echo "</tr>";
-                                $k++;
-                            }
-                        }
+                    $rows = mysqli_query($link, "SELECT * FROM reviews where ID_user=" . $ID);
+
+                    if (mysqli_num_rows($rows) < 1) {
+                        echo "<p>У вас пока нет отзывов</p>";
+                    } else {
                         ?>
+                        <table class="cab_tb">
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Оценка</th>
+                                    <th>Комментарий</th>
+                                    <th>Дата</th>
+                                    <th>Cтатус обработки</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $k = 1;
+                                while ($r = mysqli_fetch_array($rows)) {
+                                    echo "<tr>";
+                                    echo "<td>" . $k . "</td>";
+                                    echo "<td>" . $r['Mark'] . "</td>";
+                                    echo "<td>" . $r['Comment'] . "</td>";
+                                    echo "<td>" . $r['Date'] . "</td>";
+                                    $st = $r['Status'];
+                                    if ($st == 1)
+                                        echo "<td>Одобрен</td>";
+                                    if ($st == 0)
+                                        echo "<td>Не одобрен</td>";
+                                    echo "</tr>";
+                                    $k++;
+                                }
+                    }
+                    ?>
                         </tbody>
-                    </table>                                
+                    </table>
                     <a href="Reviews.php">
                         <button class="button">Оставить отзыв</button>
                     </a>

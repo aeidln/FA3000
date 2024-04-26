@@ -2,7 +2,7 @@
 
 $link = mysqli_connect("localhost", "root", "");
 mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-mysqli_select_db($link, "gallery") or die("Нет такой таблицы!");
+// mysqli_select_db($link, "gallery") or die("Нет такой таблицы!");
 if (isset($_FILES['file'])) {
     $check = can_upload($_FILES['file']);
 

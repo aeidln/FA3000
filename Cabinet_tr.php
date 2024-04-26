@@ -5,8 +5,8 @@ if (!isset($_SESSION['Email'])) {
     header("Location: Index.php"); // Если не авторизован, перенаправляем на страницу входа
     exit();
 }
-if ($_SESSION['Status']!=5){
-    header("Location: Index.php"); 
+if ($_SESSION['Status'] != 5) {
+    header("Location: Index.php");
 }
 // Подключение к базе данных
 $servername = "localhost";
@@ -56,7 +56,7 @@ $conn->close();
                     echo "<p>Email: $email</p>";
                     echo "<p>Номер телефона: $Number</p>";
                     echo "<p>Дата рождения: $birthdate</p>";
-                    
+
                     if ($status == 1) {
 
                     } elseif ($status == 10) {
@@ -73,25 +73,101 @@ $conn->close();
                     <h2>Расписание занятий</h2>
                     <img src="Resources/shedule.png">
                     <a href="Class_schedule.php">
-                    <button class="button">Расписание занятий</button>
-                </a>
+                        <button class="button">Расписание занятий</button>
+                    </a>
 
                 </div>
                 <div class="lk_b3">
                     <h2>Мои клиенты</h2>
                     <?php
-                        $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-                        mysqli_select_db($link, "db") or die("А нет такой бд!");
-                        $rows = mysqli_query($link, "SELECT * FROM club_cards where ID_user=" . $ID);
-                        $сс = mysqli_fetch_array($rows);
-                        if (empty($сс)) {
+                    $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
+                    mysqli_select_db($link, "db") or die("А нет такой бд!");
+                    $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Vid FROM club_cards c, users u where c.ID_user=u.ID and ID_tr=" . $ID);
+                    
+                    if (mysqli_num_rows($rows) < 1) {
                         echo "<p>У вас еще нет клиентов</p>";
+                    }
+                    else{
+                        while ($cc = mysqli_fetch_array($rows)) {
+                                echo "<table class='cab_tb'><thead><tr>";
+                                echo " <th>Клиент</th>";
+                                echo "<th>Тариф</th>";
+                                echo " <th>Длительность</th>";
+                                echo "<th>Дата начала</th>";
+                                echo "<th>Дата окончания</th>";                                
+                                echo " <th>Вид</th>";
+                               
+                                echo "</tr></thead><tbody><tr>";
+                                echo "<td>" . $cc['FIO']. "<Br>";
+                                if ($cc['Card_type'] == 1)
+                                    echo "<td>STANDART";
+                                else if ($cc['Card_type'] == 2)
+                                    echo "<td>VIP";
+                                echo "<td>" . $cc['Duration'] . " месяцев";
+                                echo "<td>" . $cc['Date_start'] . "<Br>";
+                                echo "<td>" . $cc['Date_end'] . "<Br>";
+                                echo "<td>" . $cc['Vid'] . "<Br>";
+                                
+                                echo "</tr></tbody></table>";
                         }
+                    
+                    }
                     ?>
+                    <a href="Add_cc.php">
+                        <button class="button">Добавить клиента</button>
+                    </a>
                 </div>
                 <div class="lk_b4">
                     <h2>Мое расписание</h2>
+                    <table class="cab_tb">
+                        <thead>
+                            <tr>
+                                <th>День недели</th>
+                                <th>Начало рабочего дня</th>
+                                <th>Конец рабочего дня</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <? $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
+                    mysqli_select_db($link, "db") or die("А нет такой бд!");
+                    $rows = mysqli_query($link, "SELECT * FROM tr_table WHERE ID_tr=" . $ID);
+                    while ($tr_t = mysqli_fetch_array($rows)) {
+                        echo "<tr>";
+                        switch ($tr_t['WeekDay']) {
+                            case 1:
+                                echo "<td>ПН</td>";
+                                break;
+                            case 2:
+                                echo "<td>ВТ</td>";
+                                break;
+                            case 3:
+                                echo "<td>СР</td>";
+                                break;
+                            case 4:
+                                echo "<td>ЧТ</td>";
+                                break;
+                            case 5:
+                                echo "<td>ПТ</td>";
+                                break;
+                            case 6:
+                                echo "<td>СБ</td>";
+                                break;
+                            case 7:
+                                echo "<td>ВС</td>";
+                                break;
+                        }
+                        echo "<td><input disabled  id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_start'] . "\" /></td>";
+                        echo "<td><input disabled id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_finish'] . "\" /></td>";
+
+                        echo "</tr>";
+                    } ?>
+
+
+                        </tbody>
+
+                    </table>
                     
+
                 </div>
             </div>
         </div>

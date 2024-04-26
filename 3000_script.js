@@ -17,42 +17,18 @@ function openAddR() {
 }
 
 function pan_adm(k) {
-	switch (k) {
-		case 0:
-			document.getElementsByClassName("pan_btn")[k].style.border = "2px solid #da1717";
-			document.getElementsByClassName("adm_body")[k].style.display = "block";
-			break;
-		case 1:
-			document.getElementsByClassName("pan_btn")[k].style.border = "2px solid #da1717";
-			document.getElementsByClassName("adm_body")[k].style.display = "block";
-			break;
-		case 2:
-			document.getElementsByClassName("pan_btn")[k].style.border = "2px solid #da1717";
-			document.getElementsByClassName("adm_body")[k].style.display = "block";
-			break;
-		case 3:
-			document.getElementsByClassName("pan_btn")[k].style.border = "2px solid #da1717";
-			document.getElementsByClassName("adm_body")[k].style.display = "block";
-			break;
-		case 4:
-			document.getElementsByClassName("pan_btn")[k].style.border = "2px solid #da1717";
-			document.getElementsByClassName("adm_body")[k].style.display = "block";
-			break;
-		case 5:
-			document.getElementsByClassName("pan_btn")[k].style.border = "2px solid #da1717";
-			document.getElementsByClassName("adm_body")[k].style.display = "block";
-			break;
-	}
+	document.getElementsByClassName("pan_btn")[k].style.border = "2px solid #da1717";
+	document.getElementsByClassName("adm_body")[k].style.display = "block";
+	window.sessionStorage.setItem('pan_btn', k);
+	window.sessionStorage.setItem('adm_body', k);
 	i = 0;
 	for (i = 0; i < 6; i++) {
 		if (i == k) continue;
 		else {
 			document.getElementsByClassName("pan_btn")[i].style.border = "2px solid #FFFFFF";
-			document.getElementsByClassName("adm_body")[i].style.display = "none";
-			// alert(i);	
+			document.getElementsByClassName("adm_body")[i].style.display = "none";	
 		}
 	}
-
 }
 
 

@@ -27,6 +27,7 @@
 }
 
 body {
+  
   padding: 0;
   margin: 0;
   font-family: 'Gilroy';
@@ -583,6 +584,19 @@ span.sim-dot {
   text-align: center;
 
 }
+.tr_r{
+  width: fit-content;
+margin: auto;
+text-align: center;
+border-radius: 10px;
+box-shadow: 2px 2px 5px #0000008f;
+padding: 10px;
+}   
+.tr_r .button{
+  vertical-align: middle; 
+  padding: 0.25rem 0.75rem;
+
+}
 
 .tb_adm {
   /* border: 3px solid #da1717; */
@@ -630,10 +644,10 @@ span.sim-dot {
   padding: 5px 0px;
 }
 
-.pan_btn:first-child {
+/* .pan_btn:first-child {
   border: 2px solid #da1717;
   border-radius: 5px;
-}
+} */
 
 .pan_btn {
   border-radius: 5px;
@@ -804,7 +818,7 @@ span a {
   color: #da1717;
   font-size: 10px;
   margin: 0px;
-  text-align: left;
+  text-align: center;
   display: none;
 
 }
@@ -993,7 +1007,8 @@ fieldset {
   border-radius: 10px;
   display: none;
   margin: 20px 0px;
-  padding: 10px 30px;
+  padding: 0px 30px;
+    padding-bottom: 20px;
 }
 
 fieldset h2 {
@@ -1057,25 +1072,28 @@ button:disabled {
 
 
 
-.trs{
-  display:flex;
+.trs {
+  display: flex;
 }
-.tr_card { 
-  position: relative;  
+
+.tr_card {
+  position: relative;
   height: 400px;
   width: 400px;
   perspective: 2000px;
-  margin:10px;
+  margin: 10px;
   display: flex;
   align-items: center;
 
 }
-.front, .back{
-  border-radius: 15px; 
-  width:100%;
+
+.front,
+.back {
+  border-radius: 15px;
+  width: 100%;
   height: 100%;
-  left:0;
-  top:0;
+  left: 0;
+  top: 0;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -1089,31 +1107,249 @@ button:disabled {
   padding-top: 10px;
 }
 
-.front img{
-  width:100%;
+.front img {
+  width: 100%;
 }
-.back{
+
+.back {
   transform: rotateY(180deg);
-  
+
 }
-.tr_card:hover > .front{
+
+.tr_card:hover>.front {
   transform: rotateY(-180deg);
 }
-.tr_card:hover > .back{
+
+.tr_card:hover>.back {
   transform: rotateY(0deg);
 }
-.a_b{
+
+.a_b {
   height: 30px;
   width: 30px;
 }
 
+select {
+  height: 30px;
+  border-radius: 5px;
+  font-family: 'Gilroy';
+  font-weight: bold;
+}
+
+.lk_b3 select {
+  margin: 15px 0px;
+  width: 100%;
+}
+
+.cab_tb{
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+
+}
+.cab_tb th, .cab_tb td{
+  padding:3px;
+  border: 1px solid;
+
+}
 
 
+.shedule {
+  width:100%;
+  margin: 30px 0px;
+  text-align: center;
+}
+.shedule td {
+ padding:0px;
+}
+
+#time{
+  text-align: right;
+  vertical-align: top;
+  width:40px;
+  padding:0;
+}
+
+.eventCard {
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px 10px 8px 34px;
+  border: 1px solid;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+  min-width: 100px;
+  text-align: left;
+}
+
+.eventCard::before {
+  width: 18px;
+  background-color: #ff2b2b;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
+input[type=time] {
+  border: none;
+  color: #2a2c2d;
+  font-size: 14px;
+  font-family: 'Arial';
+  width: 120px;
+}
+
+/* Wrapper around the hour, minute, second, and am/pm fields as well as 
+the up and down buttons and the 'X' button */
+input[type=time]::-webkit-datetime-edit-fields-wrapper {
+  display: flex;
+}
+
+/* The space between the fields - between hour and minute, the minute and 
+second, second and am/pm */
+input[type=time]::-webkit-datetime-edit-text {
+  padding: 10px 5px;
+}
+
+/* The naming convention for the hour, minute, second, and am/pm field is
+`-webkit-datetime-edit-{field}-field` */
+
+/* Hour */
+input[type=time]::-webkit-datetime-edit-hour-field {
+  background-color: #f2f4f5;
+  border-radius: 15%;
+  padding: 10px 10px;
+}
+
+/* Minute */
+input[type=time]::-webkit-datetime-edit-minute-field {
+  background-color: #f2f4f5;
+  border-radius: 15%;
+  padding: 10px 10px;
+}
 
 
+:root {
+  --duration: 7s;
+}
+.card-front:before {
+  content: "";
+  inset: 0;
+  position: absolute;
+  transform: translate3d(0, 0, 0.01px);
+  background-size: 100% 100%, 80% 80%, 200% 200%;
+  background-blend-mode: multiply, multiply, overlay;
+  background-position: 50% 50%, 50% 50%, 50% 50%;
+  mix-blend-mode: color-dodge;
+  filter: brightness(2) contrast(0.8);
+  animation: bg var(--duration) ease infinite;
+}
+.card-front {
+  display: grid;
+  transform: translate3d(0, 0, 0.01px);
+  width: 90vw;
+  max-width: 400px;
+  aspect-ratio: 3/2;
+  border-radius: 3.5% 3.5% 3.5% 3.5% / 5% 5% 5% 5%;
+ 
+  background-size: cover;
+  box-shadow: 0 30px 40px -25px rgba(15, 5, 20, 1), 0 20px 50px -15px rgba(15, 5, 20, 1);
+  overflow: hidden;
+  animation: tilt var(--duration) ease infinite;
+  image-rendering: optimizequality;
+}
+#cc1 .card-front{
+  background-image: url(Resources/cc.png);
+}
+#cc2 .card-front{
+  background-image: url(Resources/cc_vip.png);
+}
+.card-front:after {
+  content: "";
+  background: none, none, linear-gradient(125deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.4) 0.1%, rgba(255,255,255,0) 60%);
+  background-size: 200% 200%;
+  mix-blend-mode: hard-light;
+  animation: bg var(--duration) ease infinite;
+}
+.card-front * {
+  font-family: PT Mono, monospace;
+}
+.cardLogo,
+.expiry,
+.name,
+.number,
+.chip,
+.icon {
+  color: #ccc;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+  font-size: clamp(0.75rem, 2.8vw + 0.2rem, 1.1rem);
+  inset: 5%;
+  text-shadow: -1px -1px 0px rgba(255,255,255,0.5),1px -1px 0px rgba(255,255,255,0.5),1px 1px 0px rgba(0,0,0,0.5),1px -1px 0px rgba(0,0,0,0.5);
+  z-index: 5;
+}
+.name, .number, .expiry {
+  background-image: linear-gradient(to bottom, #ededed 20%, #bababa 70%), none,
+    linear-gradient(120deg, transparent 10%, white 40%, white 60%, transparent 90%);
+  background-size: cover, cover, 200%;
+  background-position: 50% 50%;
+  background-blend-mode: overlay;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  animation: bg var(--duration) ease infinite;
+}
+.number {
+  font-family: PT Mono, monospace;
+  text-align: center;
+  font-size: clamp(1rem, 8vw - 0.5rem, 2.5rem);
+  letter-spacing: 0.025em;
+  top: 60%;
+  bottom: auto;
+}
+.expiry,
+.name {
+  top: auto;
+}
+.name {
+  right: auto;
+  max-width: 180px;
+  line-height: 1.2;
+  text-align: left;
+}
+.expiry {
+  left: auto;
+}
+@keyframes tilt {
+  0%, 100% { transform: translate3d(0, 0, 0.01px) rotateY(-20deg) rotateX(5deg); }
+  50% { transform: translate3d(0, 0, 0.01px) rotateY(20deg) rotateX(5deg); }
+}
+@keyframes bg {
+  0%, 100% { background-position: 50% 50%, calc(50% + 1px) calc(50% + 1px), 0% 50%; }
+  50% { background-position: 50% 50%, calc(50% - 1px) calc(50% - 1px), 100% 50%; }
+}
+.app {
+  display: flex;
+  grid-template-rows: minmax(20px,100px) 1fr;
+  place-items: center; 
+  perspective: 2000px;
+  
+  padding: 20px;
+}
 
 
-
+.cc_block{
+  display: flex;
+}
+/* 
+.cc_block div{
+ width:50%;
+} */
 
 
 
