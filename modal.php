@@ -55,9 +55,10 @@
 
 			</div>
 		</div>
-		<!-- <div id="reklama">
+		<div id="reklama">
 				<img id="gRek" src="Resources/rek.png">
-			</div> -->
+				<button class="button" onclick='openReg();'>Войти/Зарегистрироваться</button>
+			</div>
 	</div>
 </div>
 

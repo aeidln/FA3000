@@ -1,14 +1,19 @@
 function closeMod() {
 	document.getElementsByClassName("modal")[0].style.display = "none";
+	document.getElementById("reklama").style.display = "none";
+	document.getElementById("registration").style.display = "none";
+	
 }
 function openReg() {
-	document.body.style.overflow = "";
+	document.body.style.overflow = "hidden";
+	document.getElementById("reklama").style.display = "none";
 	document.getElementsByClassName("modal")[0].style.display = "block";
 	document.getElementById("registration").style.display = "block";
 }
 function openRek() {
-	document.body.style.overflow = "";
-	document.getElementsByClassName("modal")[0].style.display = "block";
+	document.body.style.overflow = "hidden";
+	document.getElementsByClassName("modal")[0].style.display = "block";	
+	document.getElementById("registration").style.display = "none";
 	document.getElementById("reklama").style.display = "block";
 }
 function openAddR() {

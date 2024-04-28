@@ -766,6 +766,10 @@ span a {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
 }
+body.modal-cont {
+  overflow: hidden;
+    position: fixed;
+}
 
 .modal-cont {
   margin: auto;
@@ -774,6 +778,7 @@ span a {
   width: 40%;
   border-radius: 15px;
   background-color: #FFFFFF;
+  overflow: hidden;
 }
 
 #gRek {
@@ -1251,7 +1256,7 @@ input[type=time]::-webkit-datetime-edit-minute-field {
   display: grid;
   transform: translate3d(0, 0, 0.01px);
   width: 90vw;
-  max-width: 400px;
+  max-width: 450px;
   aspect-ratio: 3/2;
   border-radius: 3.5% 3.5% 3.5% 3.5% / 5% 5% 5% 5%;
  
@@ -1345,6 +1350,12 @@ input[type=time]::-webkit-datetime-edit-minute-field {
 
 .cc_block{
   display: flex;
+  justify-content: space-evenly;
+}
+.cc_inf{
+  display: flex;
+  align-items: center;
+  
 }
 /* 
 .cc_block div{
