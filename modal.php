@@ -65,7 +65,6 @@
 	function login() {
 		Email_v = document.getElementById("Email_v").value;
 		Password_v = document.getElementById("Password_v").value;
-
 		$.ajax({
 			url: 'login.php',         /* Куда отправить запрос */
 			method: 'post',
@@ -111,12 +110,16 @@
 			data: { Email: Email, Password: Password, FIO: FIO, Number: Number, Birthdate: Birthdate },     /* Данные передаваемые в массиве */
 			success: function (response) {
 				
-				//if (response == -1){
+				if (response == -1){
 				mail.style.borderColor = "red";
 				document.getElementsByClassName("error")[2].style.display = "block";
 				document.getElementsByClassName("error")[2].innerHTML = "Такой логин уже занят. Пожалуйста, выберите другой логин.";
 				}
-				else if (response == 1) window.location.href = "Cabinet.php";				
+				else if (response == 1) {
+					window.location.href = "Cabinet.php";
+				}	
+				else console.log(response);
+						
 
 			}
 		});

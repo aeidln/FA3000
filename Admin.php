@@ -1,4 +1,13 @@
-
+<?php
+session_start(); // Инициализация сессии                
+// Проверка, авторизован ли пользователь
+if (!isset($_SESSION['Email'])) {
+    header("Location: Index.php"); // Если не авторизован, перенаправляем на страницу входа
+    exit();
+}
+if ($_SESSION['Status'] != 10) {
+    header("Location: Index.php");
+}?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -6,7 +15,7 @@
     <title>ФИТНЕС-АРЕНА 3000</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Put your description here.">
+    <meta name="description" content="Admin panel">
     <link rel="stylesheet" href="3000_стили.css" type="text/css">
     <link rel="shortcut icon" href="Resources/icon.ico" type="image/png">
 </head>
@@ -179,17 +188,35 @@
             </div>
             <div class="adm_body">
                 <h3>Редактирование текста</h3>
+                <table class="tb_adm">
+                <colgroup>
+       <col span="1" style="width: 10%;">
+       <col span="1" style="width: 90%;">
+    </colgroup>
+                    <thead>
+                        <th>Заголовок</th>
+                        <th>Текст</th>
+                    </thead>
+                    <tbody>
+                   
                 <?php
                 $rows = mysqli_query($link, "SELECT * from preim_ ");
                 while ($preim = mysqli_fetch_array($rows)) {
+                    echo "<tr>";
+                    
 
-                    echo "<form method='POST' action='edit_tx.php?ID=" . $preim['ID'] . "'>";
-                    echo "<input name=\"title\" class=\"title\" type=\"text\" value=\"" . $preim['title'] . "\"></input><br>";
-                    echo "<textarea name=\"text\" class=\"text\">" . $preim['text'] . "</textarea>";
-                    echo "<button type=\"submit\" class=\"button\">Сохранить</button>";
-                    echo "</form>";
+                    // echo "<form method='POST' action='edit_tx.php?ID=" . $preim['ID'] . "'>";
+                    echo "<td class ='abc' onchange='alert(this.value)''>". $preim['title']."</td>";
+                    echo "<td class ='abc' onchange='alert(this.value)'>". $preim['text']."</td>";
+                    // echo "<td><input name=\"title\" class=\"title\" type=\"text\" value=\"" . $preim['title'] . "\"></input></td>";
+                    
+                    // echo "<td><textarea name=\"text\" class=\"text\">" . $preim['text'] . "</textarea></td>";
+                    // echo "<button type=\"submit\" class=\"button\">Сохранить</button>";
+                    // echo "</form>";
+                    echo "</tr>";
                 }
                 ?>
+                 </tbody></table>
                 <!-- <h3>Действующие акции</h3> -->
                 <h3>Редактирование фотографий</h3>
                 <center>
@@ -213,9 +240,24 @@
 
 </html>
 <script language='javascript'>
-    // document.getElementsByClassName("adm_body")[0].style.display = "block";
-// window.sessionStorage.setItem('pan_btn', '1');
-//     window.sessionStorage.setItem('adm_body', '1');
+
+
+
+document.querySelectorAll('.abc').forEach(function(element) {
+  element.ondblclick = function() {
+    var val = this.innerHTML;
+    var input = document.createElement("input");
+    input.value = val;
+    input.className = "text";
+    input.onblur = function() {
+      var val = this.value;
+      this.parentNode.innerHTML = val;
+    };
+    this.innerHTML = "";
+    this.appendChild(input);
+    input.focus();
+  };
+});
     const n = window.sessionStorage.getItem('pan_btn');
     console.log(n);
     document.getElementsByClassName("pan_btn")[n].style.border = "2px solid #da1717";

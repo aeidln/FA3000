@@ -32,16 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo -1;
     } else {
         // Логин свободен, выполнение запроса на добавление пользователя
-        $stmt = $conn->prepare("INSERT INTO users (FIO, Email, Number, Birthdate, Password, Status) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssi", $FIO, $email, $number, $birthdate, $password, $status);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = $conn->prepare("INSERT INTO users (FIO, Email, Number, Birthdate, Status, Hash) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssis", $FIO, $email, $number, $birthdate, $status, $hash);
         if ($stmt->execute()) {
             // Регистрация успешно завершена, сохранение информации в сессии и перенаправление на страницу cabinet.php
             $_SESSION['FIO'] = $FIO;
             $_SESSION['Email'] = $email;
             $_SESSION['Number'] = $number;
             $_SESSION['Birthdate'] = $birthdate;
-            $_SESSION['Password'] = $password;
             $_SESSION['PROV'] = true;
+            $_SESSION['Status'] = $status;
             echo 1;
         }
         else {

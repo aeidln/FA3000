@@ -26,20 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password_v = trim($_POST['Password_v']);
 
     // Проверка соответствия логина и пароля
-    $stmt = $conn->prepare("SELECT Email, Status FROM users WHERE Email = ? AND Password = ?");
-    $stmt->bind_param("ss", $email_v, $password_v);
+    $stmt = $conn->prepare("SELECT Email, Status, Hash FROM users WHERE Email = ?");
+    $stmt->bind_param("s", $email_v);
     $stmt->execute();
     $stmt->store_result();
+    $stmt->bind_result($email_v, $status, $hash);
+    $stmt->fetch();
 
-    if ($stmt->num_rows > 0) {
-        // Авторизация успешна, сохранение информации в сессии и перенаправление на страницу кабинета
-        $_SESSION['Email'] = $email_v;
-        $stmt->bind_result($email_v, $status);
-        $stmt->fetch();
-        $_SESSION['Status'] = $status;
-        $_SESSION['PROV'] = true;
-        echo $status;
-        exit();
+    if ($stmt->num_rows > 0 && password_verify($password_v, $hash)) {
+    // Авторизация успешна, сохранение информации в сессии и перенаправление на страницу кабинета
+    $_SESSION['Email'] = $email_v;
+    $_SESSION['Status'] = $status;
+    $_SESSION['PROV'] = true;
+    echo $status;
+   exit();
     } else {
         echo -1;
     }
