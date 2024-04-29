@@ -766,11 +766,6 @@ span a {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
 }
-body.modal-cont {
-  overflow: hidden;
-    position: fixed;
-}
-
 .modal-cont {
   margin: auto;
   padding: 0;
@@ -796,6 +791,14 @@ body.modal-cont {
   text-align: center;
   padding: 0;
   overflow: hidden;
+}
+#reklama .button{
+  width: 80%;
+  margin-top: -10px;
+  margin-bottom: 20px;  
+}
+#cc_form{
+  padding: 30px 20px;
 }
 
 #close {

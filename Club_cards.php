@@ -23,9 +23,10 @@
 					<div class="cc_inf"><img src="Resources/1.jpg">1 фитнес-тестирование</div>
 					<div class="cc_inf"><img src="Resources/1.jpg">3 персональных тренировок</div>
 					<? session_start();
-					if (isset($_SESSION['Email'])) {
-						if ($_SESSION['Status'] == 1){
-							echo "<button onclick=\"z_card(1);\" class=\"button\">Оставить заявку</button>";
+					if (isset($_SESSION['Email']) && $_SESSION['Status'] == 1)
+							echo "<button onclick=\"openCc_form(1);\" class=\"button\">Оставить заявку</button>";
+						
+					
 					
 					?>
 				</div>
@@ -63,9 +64,9 @@
 					<div><img src="Resources/1.jpg">Выбор персонального тренера в ЛК</div>
 					<div><img src="Resources/1.jpg">5 гостевых визитов</div>
 					<?
-						echo "<button onclick=\"z_card(2);\" class=\"button\">Оставить заявку</button>";
-					}					
-				}
+						if (isset($_SESSION['Email']) && $_SESSION['Status'] == 1)
+						echo "<button onclick=\"openCc_form(2);\" class=\"button\">Оставить заявку</button>";
+					
 				?>
 				</div>				
 			</div>
@@ -76,38 +77,9 @@
 						echo "<button class=\"button\" onclick='openReg();'>Войти/Зарегистрироваться</button>";
 				}
 				?>
-			</span>			
-			
-
-
-
+			</span>		
 		</div>
 	</div>
 	<?php require_once ('footer.php'); ?>
 </body>
-
-
 </html>
-<script>
-	function z_card(type_c) {
-		
-
-		// document.getElementById("cc_zav").style.display = "block";
-
-		// $.ajax({
-		// 	url: 'z_card.php',         /* Куда отправить запрос */
-		// 	method: 'get',         /* Метод запроса (post или get) */
-		// 	dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-		// 	data: { type_c: type_c },     /* Данные передаваемые в массиве */
-		// 	success: function (data) {
-		// 		
-				
-
-
-		// 		/* функция которая будет выполнена после успешного запроса.  */
-		// 		// document.getElementsByClassName("modal")[0].style.display = "block";
-		// 		// document.getElementsByClassName("modal-cont")[0].innerHTML="<h1>МОЛОДЕЦ АДЕЛИНА</h1>" /* В переменной data содержится ответ от index.php. */
-		// 	}
-		// })
-	};
-</script>

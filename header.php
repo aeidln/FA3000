@@ -72,14 +72,4 @@
 
 	</div>
 </header>
-<?php require_once('modal.php'); 
-session_start();
-if (!isset($_SESSION['Email'])) {	
-	echo "<script>
-	setTimeout(() => {
-		document.getElementsByClassName(\"modal\")[0].style.display = \"block\";
-		document.getElementById(\"reklama\").style.display = \"block\";
-	  }, 3000);
-	</script>";
-}
-?>
+<?php require_once('modal.php'); ?>

@@ -1,8 +1,9 @@
 function closeMod() {
+	document.body.style.overflow = "";
 	document.getElementsByClassName("modal")[0].style.display = "none";
 	document.getElementById("reklama").style.display = "none";
 	document.getElementById("registration").style.display = "none";
-	
+
 }
 function openReg() {
 	document.body.style.overflow = "hidden";
@@ -12,10 +13,27 @@ function openReg() {
 }
 function openRek() {
 	document.body.style.overflow = "hidden";
-	document.getElementsByClassName("modal")[0].style.display = "block";	
+	document.getElementsByClassName("modal")[0].style.display = "block";
 	document.getElementById("registration").style.display = "none";
 	document.getElementById("reklama").style.display = "block";
 }
+
+
+function openCc_form(type_c) {
+	document.body.style.overflow = "hidden";
+	document.getElementsByClassName("modal")[0].style.display = "block";
+	document.getElementById("cc_form").style.display = "block";
+	a = document.getElementById("type_c").value = type_c;
+	alert(a);
+	// if (type_c == 1)
+	// 	document.getElementById("type_c").innerHTML = "STANDART";
+	// else if (type_c == 2)
+	// 	document.getElementById("type_c").innerHTML = "VIP";
+	
+}
+
+
+
 function openAddR() {
 
 	document.getElementById("add_rev").style.display = "block";
@@ -31,7 +49,7 @@ function pan_adm(k) {
 		if (i == k) continue;
 		else {
 			document.getElementsByClassName("pan_btn")[i].style.border = "2px solid #FFFFFF";
-			document.getElementsByClassName("adm_body")[i].style.display = "none";	
+			document.getElementsByClassName("adm_body")[i].style.display = "none";
 		}
 	}
 }

@@ -13,23 +13,23 @@ if ($conn->connect_error) {
     die("Ошибка подключения к базе данных: " . $conn->connect_error);
 }
 $email = $_SESSION['Email'];
-$stmt = $conn->prepare("SELECT FIO, Number FROM users WHERE Email = ?");
+$stmt = $conn->prepare("SELECT ID FROM users WHERE Email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
-$stmt->bind_result($FIO_c, $number_c);
+$stmt->bind_result($ID_u);
 $stmt->fetch();
 $stmt->close();
-$status_c = 0;
-$date_c = date('Y-m-d');
-$type="card";
-$type_c=$_GET['type_c'];
-$stmt = $conn->prepare("INSERT INTO zayavki (FIO, Number, Type, Status, Date, Type_c) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssisi", $FIO_c, $number_c, $type, $status_c, $date_c, $type_c);
+$status = 0;
+$type_c = $_POST['type_c'];
+$duration = $_POST['duration'];
+$format = $_POST['format'];
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$stmt = $conn->prepare("INSERT INTO club_cards (Card_type, Duration, Format, ID_user, Status) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("sssss", $type_c, $duration, $format, $ID_u, $status);
 if ($stmt->execute()) {
-    echo "<script>console.log('Спасибо, ваша заявка отправлена!');</script>";
-    // echo "<script>document.getElementsByClassName(\"modal\")[0].style.display = \"block\";document.getElementsByClassName(\"modal\")[0].innerHTML=\"МОЛОДЕЦ АДЕЛИНА\"</script>";
+    echo "<script>console.log('Спасибо, ваша заявка отправлена!');</script>";  
+    header("Location: Cabinet.php");  
 } else {
     echo "Ошибка: " . $stmt->error;
 }
-// Закрытие подготовленного запроса
 $stmt->close();
