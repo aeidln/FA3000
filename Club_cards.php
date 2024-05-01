@@ -25,7 +25,7 @@
 					<? session_start();
 					if (isset($_SESSION['Email']) && $_SESSION['Status'] == 1)
 							echo "<button onclick=\"openCc_form(1);\" class=\"button\">Оставить заявку</button>";
-						
+						//проверка на наличие заявки
 					
 					
 					?>

@@ -18,7 +18,7 @@ while ($user = mysqli_fetch_array($rows)) {
     if ($user['Status'] == 10) {
         echo "<td>Администратор</td>";
     }
-    echo "<td><a onclick=edit(" . $user['ID'] . "," . $d . ");><img class='a_b' src=\"Resources/r.png\"></a></td>";
+    echo "<td><a onclick=edit(" . $user['ID'].");><img class='a_b' src=\"Resources/r.png\"></a></td>";
     echo "<td><a onclick=del(" .$user['ID'] . "," . $d . ");><img class='a_b' src=\"Resources/d.png\"></a></td>";
     echo "</tr>";
 }

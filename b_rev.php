@@ -8,15 +8,16 @@ while ($rev = mysqli_fetch_array($rows)) {
     echo "<td>" . $rev['Mark'] . "</td>";
     echo "<td>" . $rev['Comment'] . "</td>";
     echo "<td>" . $rev['Date'] . "</td>";
-    $k=3;
+    $t=2;
     $d = 2;
+    $st1 = 1;
     if ($rev['Status'] == 1) {
         echo "<td>Одобрен</td>";
         echo "<td></td>";
         echo "<td></td>";
     } else if ($rev["Status"] == 0) {
         echo "<td>Не одобрен</td>";
-        echo "<td><a onclick=zav_z(" . $rev['ID'] . "," . $k . ");><img class='a_b' src=\"Resources/z.png\"></a></td>";
+        echo "<td><a onclick=zav_z(" . $z_pr['ID'] . "," . $st1 . "," . $t . ");><img class='a_b' src=\"Resources/z.png\"></a></td>";
         echo "<td><a onclick=del(" . $rev['ID'] . "," . $d . ");><img class='a_b' src=\"Resources/k.png\"></a></td>";
     }
     echo "</tr>";

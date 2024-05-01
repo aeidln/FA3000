@@ -4,7 +4,7 @@ mysqli_select_db($link, "db") or die("Ошибка подключения к б�
 
 $title = $_POST['title'];
 $text = $_POST['text'];
-$makez1 = "Update preim_ set title = \"".$title."\", text = \"".$text."\" where ID=" . $_GET['ID'];
+$makez1 = "Update preim_ set title = \"".$title."\", text = \"".$text."\" where ID=" . $_POST['id'];
 mysqli_query($link, $makez1);
 header('Location: Index.php');
 ?>

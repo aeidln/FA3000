@@ -39,7 +39,7 @@ $conn->close();
 </head>
 
 <body>
-    <?php require_once('header.php'); ?>
+    <?php require_once ('header.php'); ?>
     <div class="container">
         <div class="block">
             <a href="exit.php">
@@ -81,7 +81,7 @@ $conn->close();
                     <?php
                     $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
                     mysqli_select_db($link, "db") or die("А нет такой бд!");
-                    $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Vid FROM club_cards c, users u where c.ID_tr=u.ID and ID_user=" . $ID);
+                    $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Format FROM club_cards c, users u where c.ID_tr=u.ID and ID_user=" . $ID);
                     if (mysqli_num_rows($rows) < 1) {
                         echo "<p>У вас еще нет клубной карты</p>";
                         echo "<a href=\"Club_cards.php\">";
@@ -107,7 +107,7 @@ $conn->close();
                                 echo "<th>Тариф</th>";
                                 echo " <th>Длительность</th>";
                                 echo "<th>Дата начала</th>";
-                                echo "<th>Дата окончания</th>";                                
+                                echo "<th>Дата окончания</th>";
                                 echo " <th>Вид</th>";
                                 echo " <th>Тренер</th>";
                                 echo "</tr></thead><tbody><tr>";
@@ -115,18 +115,12 @@ $conn->close();
                                     echo "<td>STANDART";
                                 else if ($cc['Card_type'] == 2)
                                     echo "<td>VIP";
-
                                 echo "<td>" . $cc['Duration'] . " месяцев";
                                 echo "<td>" . $cc['Date_start'] . "<Br>";
                                 echo "<td>" . $cc['Date_end'] . "<Br>";
-                                echo "<td>" . $cc['Vid'] . "<Br>";
-                                echo "<td>" . $cc['FIO']. "<Br>";
+                                echo "<td>" . $cc['Format'] . "<Br>";
+                                echo "<td>" . $cc['FIO'] . "<Br>";
                                 echo "</tr></tbody></table>";
-
-                                // echo $сс['Date_end'] ;
-                                // echo $сс['ID_tr'] ;
-                    
-
                             }
                         }
                     }
@@ -181,7 +175,7 @@ $conn->close();
             </div>
         </div>
     </div>
-    <?php require_once('footer.php'); ?>
+    <?php require_once ('footer.php'); ?>
 </body>
 
 </html>

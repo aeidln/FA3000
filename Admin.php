@@ -7,7 +7,7 @@ if (!isset($_SESSION['Email'])) {
 }
 if ($_SESSION['Status'] != 10) {
     header("Location: Index.php");
-}?>
+} ?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -65,7 +65,7 @@ if ($_SESSION['Status'] != 10) {
                             <th>Номер телефона</th>
                             <th>Дата заявки</th>
                             <th>Статус</th>
-                            <th>Завершить</th>
+                            <th colspan="2">Одобрить/Отклонить</th>
                         </tr>
                     </thead>
                     <tbody id="b_z_pr">
@@ -81,7 +81,7 @@ if ($_SESSION['Status'] != 10) {
                             <th>Номер телефона</th>
                             <th>Дата заявки</th>
                             <th>Статус</th>
-                            <th>Завершить</th>
+                            <th colspan="2">Одобрить/Отклонить</th>
                         </tr>
                     </thead>
                     <tbody id="b_z_vp">
@@ -92,11 +92,13 @@ if ($_SESSION['Status'] != 10) {
                 <table class="tb_adm">
                     <thead>
                         <tr>
+                            <th>Email</th>
                             <th>ФИО</th>
-                            <th>Номер телефона</th>
                             <th>Дата заявки</th>
                             <th>Тариф</th>
-                            <th>Статус</th>
+                            <th>Длительность карты</th>
+                            <th>Фомат карты</th>
+                            <th>Статус заявки</th>
                             <th>Завершить</th>
                         </tr>
                     </thead>
@@ -144,7 +146,8 @@ if ($_SESSION['Status'] != 10) {
                             <th>Комментарий</th>
                             <th>Дата</th>
                             <th>Cтатус обработки</th>
-                            <th colspan="2">Одобрить/Удалить</th>
+                            <th>Одобрить</th>
+                            <th>Удалить</th>
                         </tr>
                     </thead>
                     <tbody id="b_rev">
@@ -159,18 +162,19 @@ if ($_SESSION['Status'] != 10) {
                 <?php
                 $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
                 mysqli_select_db($link, "db") or die("А нет такой бд!");
-                $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Vid FROM club_cards c, users u where c.ID_tr=u.ID");
-
+                $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Format FROM club_cards c, users u where c.ID_tr=u.ID");
+                echo "<table class='tb_adm'><thead><tr>";
+                echo "<th>Тариф</th>";
+                echo " <th>Длительность</th>";
+                echo "<th>Дата начала</th>";
+                echo "<th>Дата окончания</th>";
+                echo " <th>Вид</th>";
+                echo " <th>Тренер</th>";
+                echo "</tr></thead><tbody>";
                 while ($cc = mysqli_fetch_array($rows)) {
 
-                    echo "<table class='tb_adm'><thead><tr>";
-                    echo "<th>Тариф</th>";
-                    echo " <th>Длительность</th>";
-                    echo "<th>Дата начала</th>";
-                    echo "<th>Дата окончания</th>";
-                    echo " <th>Вид</th>";
-                    echo " <th>Тренер</th>";
-                    echo "</tr></thead><tbody><tr>";
+
+                    echo "<tr>";
                     if ($cc['Card_type'] == 1)
                         echo "<td>STANDART";
                     else if ($cc['Card_type'] == 2)
@@ -178,45 +182,49 @@ if ($_SESSION['Status'] != 10) {
                     echo "<td>" . $cc['Duration'] . " месяцев";
                     echo "<td>" . $cc['Date_start'] . "<Br>";
                     echo "<td>" . $cc['Date_end'] . "<Br>";
-                    echo "<td>" . $cc['Vid'] . "<Br>";
+                    echo "<td>" . $cc['Format'] . "<Br>";
                     echo "<td>" . $cc['FIO'] . "<Br>";
-                    echo "</tr></tbody></table>";
+                    echo "</tr>";
+
 
                 }
+                echo "</tbody></table>";
 
                 ?>
             </div>
             <div class="adm_body">
                 <h3>Редактирование текста</h3>
                 <table class="tb_adm">
-                <colgroup>
-       <col span="1" style="width: 10%;">
-       <col span="1" style="width: 90%;">
-    </colgroup>
+                    <colgroup>
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 90%;">
+                    </colgroup>
                     <thead>
                         <th>Заголовок</th>
                         <th>Текст</th>
                     </thead>
                     <tbody>
-                   
-                <?php
-                $rows = mysqli_query($link, "SELECT * from preim_ ");
-                while ($preim = mysqli_fetch_array($rows)) {
-                    echo "<tr>";
-                    
 
-                    // echo "<form method='POST' action='edit_tx.php?ID=" . $preim['ID'] . "'>";
-                    echo "<td class ='abc' onchange='alert(this.value)''>". $preim['title']."</td>";
-                    echo "<td class ='abc' onchange='alert(this.value)'>". $preim['text']."</td>";
-                    // echo "<td><input name=\"title\" class=\"title\" type=\"text\" value=\"" . $preim['title'] . "\"></input></td>";
-                    
-                    // echo "<td><textarea name=\"text\" class=\"text\">" . $preim['text'] . "</textarea></td>";
-                    // echo "<button type=\"submit\" class=\"button\">Сохранить</button>";
-                    // echo "</form>";
-                    echo "</tr>";
-                }
-                ?>
-                 </tbody></table>
+                        <?php
+                        $rows = mysqli_query($link, "SELECT * from preim_ ");
+                        while ($preim = mysqli_fetch_array($rows)) {
+                            echo "<tr>";
+
+
+                            // // echo "<form method='POST' action='edit_tx.php?ID=" . $preim['ID'] . "'>";
+                            echo "<td class ='abc' ondblclick='ch_tx();'>" . $preim['title'] . "</td>";
+                            echo "<td class ='abc' >" . $preim['text'] . "</td>";
+                            // echo "<td class ='abc' onchange='edit_tx(" . $preim['ID'] . ", text, this.value);>" . $preim['text'] . "</td>";
+                            // echo "<td><input name=\"title\" class=\"title\" type=\"text\" value=\"" . $preim['title'] . "\"></input></td>";
+                        
+                            // echo "<td><textarea name=\"text\" class=\"text\">" . $preim['text'] . "</textarea></td>";
+                            // echo "<button type=\"submit\" class=\"button\">Сохранить</button>";
+                            // echo "</form>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
                 <!-- <h3>Действующие акции</h3> -->
                 <h3>Редактирование фотографий</h3>
                 <center>
@@ -241,34 +249,37 @@ if ($_SESSION['Status'] != 10) {
 </html>
 <script language='javascript'>
 
+var val1="";
 
+   function ch_tx (){
+           var val = this.innerHTML;
+            var input = document.createElement("input");
+            input.value = val;
+            input.className = "text";
+            input.onblur = function () {
+                var val = this.value;
+                this.parentNode.innerHTML = val;
+                console.log(val);
+                edit_tx(1,1,val);
+            };            
+            this.innerHTML = "";
+            this.appendChild(input);
+            input.focus();
 
-document.querySelectorAll('.abc').forEach(function(element) {
-  element.ondblclick = function() {
-    var val = this.innerHTML;
-    var input = document.createElement("input");
-    input.value = val;
-    input.className = "text";
-    input.onblur = function() {
-      var val = this.value;
-      this.parentNode.innerHTML = val;
-    };
-    this.innerHTML = "";
-    this.appendChild(input);
-    input.focus();
-  };
-});
+   }
+    
+    
     const n = window.sessionStorage.getItem('pan_btn');
     console.log(n);
     document.getElementsByClassName("pan_btn")[n].style.border = "2px solid #da1717";
-	document.getElementsByClassName("adm_body")[n].style.display = "block";
+    document.getElementsByClassName("adm_body")[n].style.display = "block";
 
 
 
     function podt(id) {
         if (confirm('Желаете удалить фотографию?'))
-            window.location.replace("del_gal.php?ID="+id);
-};
+            window.location.replace("del_gal.php?ID=" + id);
+    };
 
     function myFunction() {
         var n = document.getElementById("tr_names");
@@ -285,13 +296,13 @@ document.querySelectorAll('.abc').forEach(function(element) {
         });
 
     }
-    function zav_z(id, f, type_c) {
+    function zav_z(id, st, type_z) {
         $.ajax({
-            url: 'zav_z.php',         /* Куда отправить запрос */
+            url: 'ch_st.php',         /* Куда отправить запрос */
             method: 'post',
             async: false,          /* Метод запроса (post или get) */
             dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-            data: { id: id, f: f, type_c: type_c },     /* Данные передаваемые в массиве */
+            data: { id: id, st: st, type_z: type_z },     /* Данные передаваемые в массиве */
             success: function (data) {   /* функция которая будет выполнена после успешного запроса.  */
                 console.log(data);
             }
@@ -340,6 +351,21 @@ document.querySelectorAll('.abc').forEach(function(element) {
         });
 
     }
+    function edit_tx(id, type, val) {
+        console.log(id, type, val);
+        // $.ajax({
+        //     url: 'edit_tx.php',         /* Куда отправить запрос */
+        //     method: 'post',
+        //     async: false,             /* Метод запроса (post или get) */
+        //     dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+        //     data: { id: id, type: type, val: val },     /* Данные передаваемые в массиве */
+        //     success: function (data) {  /* функция которая будет выполнена после успешного запроса.  */
+        //         console.log(data);
+        //         /* В переменной data содержится ответ от index.php. */
+        //     }
+        // });
+
+    }
     function del(id, f) {
         $.ajax({
             url: 'delete.php',         /* Куда отправить запрос */
@@ -348,7 +374,7 @@ document.querySelectorAll('.abc').forEach(function(element) {
             dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
             data: { id: id, f: f },     /* Данные передаваемые в массиве */
             success: function (data) {   /* функция которая будет выполнена после успешного запроса.  */
-                console.log(f); /* В переменной data содержится ответ от index.php. */
+                console.log(data); /* В переменной data содержится ответ от index.php. */
             }
         });
         $.ajax({
@@ -365,6 +391,9 @@ document.querySelectorAll('.abc').forEach(function(element) {
                 $("#b_rev").html(php);
             }
         });
+    }
+    function edit(id) {
+        openReg();
     }
 
 </script>

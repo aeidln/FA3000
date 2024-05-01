@@ -24,7 +24,7 @@ function openCc_form(type_c) {
 	document.getElementsByClassName("modal")[0].style.display = "block";
 	document.getElementById("cc_form").style.display = "block";
 	a = document.getElementById("type_c").value = type_c;
-	alert(a);
+
 	// if (type_c == 1)
 	// 	document.getElementById("type_c").innerHTML = "STANDART";
 	// else if (type_c == 2)
