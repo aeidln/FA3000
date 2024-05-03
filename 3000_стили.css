@@ -241,11 +241,6 @@ hr {
   position: relative;
 }
 
-.circs {
-  display: flex;
-  justify-content: center;
-}
-
 .b1 {
   max-width: 1440px;
   padding: 30px;
@@ -1077,13 +1072,6 @@ button:disabled {
   /* filter: grayscale(100%); */
 }
 
-
-
-
-.trs {
-  display: flex;
-}
-
 .tr_card {
   position: relative;
   height: 400px;
@@ -1309,17 +1297,17 @@ input[type=time]::-webkit-datetime-edit-minute-field {
   background-position: 50% 50%;
   background-blend-mode: overlay;
   -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
   animation: bg var(--duration) ease infinite;
 }
 .number {
   font-family: PT Mono, monospace;
   text-align: center;
-  font-size: clamp(1rem, 8vw - 0.5rem, 2.5rem);
+  font-size: 35px;
   letter-spacing: 0.025em;
-  top: 60%;
+  top: 67%;
   bottom: auto;
 }
+
 .expiry,
 .name {
   top: auto;
@@ -1346,8 +1334,9 @@ input[type=time]::-webkit-datetime-edit-minute-field {
   grid-template-rows: minmax(20px,100px) 1fr;
   place-items: center; 
   perspective: 2000px;
-  
+  width: 60%;
   padding: 20px;
+  justify-content: center;
 }
 
 
@@ -1355,15 +1344,24 @@ input[type=time]::-webkit-datetime-edit-minute-field {
   display: flex;
   justify-content: space-evenly;
 }
-.cc_inf{
-  display: flex;
-  align-items: center;
-  
+.cc_block h2{
+  font-family: "If_kica";
 }
-/* 
-.cc_block div{
- width:50%;
-} */
+
+.cc_inf{
+  text-align: center;
+  width: 160px;
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  padding: 30px;
+  justify-content: center;
+}
+.cc_infs{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 
 

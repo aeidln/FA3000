@@ -257,5 +257,37 @@ if (!isset($_SESSION['Email'])) {
 	//     }
 	//   }
 	// });
+	function closeMod() {
+	document.body.style.overflow = "";
+	document.getElementsByClassName("modal")[0].style.display = "none";
+	document.getElementById("reklama").style.display = "none";
+	document.getElementById("registration").style.display = "none";
 
+}
+function openReg() {
+	document.body.style.overflow = "hidden";
+	document.getElementById("reklama").style.display = "none";
+	document.getElementsByClassName("modal")[0].style.display = "block";
+	document.getElementById("registration").style.display = "block";
+}
+function openRek() {
+	document.body.style.overflow = "hidden";
+	document.getElementsByClassName("modal")[0].style.display = "block";
+	document.getElementById("registration").style.display = "none";
+	document.getElementById("reklama").style.display = "block";
+}
+
+
+function openCc_form(type_c) {
+	document.body.style.overflow = "hidden";
+	document.getElementsByClassName("modal")[0].style.display = "block";
+	document.getElementById("cc_form").style.display = "block";
+	a = document.getElementById("type_c").value = type_c;
+
+	// if (type_c == 1)
+	// 	document.getElementById("type_c").innerHTML = "STANDART";
+	// else if (type_c == 2)
+	// 	document.getElementById("type_c").innerHTML = "VIP";
+	
+}
 </script>

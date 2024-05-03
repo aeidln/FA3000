@@ -24,7 +24,7 @@
 				мотивируя, поддерживая и направляя своих подопечных к новым вершинам достижений.
 				Здесь каждый тренер – не просто инструктор, а настоящий наставник, готовый поддержать и помочь в
 				освоении новых вершин фитнеса и здорового образа жизни.</p>
-				<div class=trs>
+				<div class="container">
 			<?php
 			$link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
 			mysqli_select_db($link, "db") or die("А нет такой бд!");
@@ -44,64 +44,7 @@
 			}
 			?>
 				</div>
-			<!-- <div class=trs>
-
-
-
-
-				<div class=tr_card>
-					<div class=front>
-						<img src="Resources/tr1.jpg">
-						<h2>Давлетов Адольф</h2>
-					</div>
-					<div class=back>
-						Привет, я тренер Адольф Давлетов!
-					</div>
-				</div>
-				<div class=tr_card>
-					<div class=front>
-						<img src="Resources/tr2.jpg">
-						<h2>Давлетов Адольф</h2>
-					</div>
-					<div class=back>
-						Привет, я тренер Адольф Давлетов!
-					</div>
-				</div>
-				<div class=tr_card>
-					<div class=front>
-						<img src="Resources/tr3.jpg">
-						<h2>Давлетов Адольф</h2>
-					</div>
-					<div class=back>
-						Привет, я тренер Адольф Давлетов!
-					</div>
-				</div>
-				<div class=tr_card>
-					<div class=front>
-						<img src="Resources/tr4.jpg">
-						<h2>Давлетов Адольф</h2>
-					</div>
-					<div class=back>
-						Привет, я тренер Адольф Давлетов!
-					</div>
-				</div>
-				<div class=tr_card>
-					<div class=front>
-						<img src="Resources/tr5.jpg">
-						<h2>Давлетов Адольф</h2>
-					</div>
-					<div class=back>
-						Привет, я тренер Адольф Давлетов!
-					</div>
-				</div>
-
-
-
-			</div> -->
-
-
-
-		</div>
+			</div>
 	</div>
 	<?php require_once('footer.php'); ?>
 </body>

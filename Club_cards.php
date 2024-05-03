@@ -4,6 +4,8 @@
 <head>
 	<title>ФИТНЕС-АРЕНА 3000</title>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Клубные карты">
 	<link rel="stylesheet" href="3000_стили.css" type="text/css">
 	<link rel="shortcut icon" href="Resources/icon.ico" type="image/png">
 </head>
@@ -12,16 +14,19 @@
 	<?php require_once ('header.php'); ?>
 	<div class="container">
 		<div class="block">
-			<a href="Index.php">Главная</a>/<a>Клубные карты</a><br>
+			<a href="Index.php">Главная</a>/Клубные карты<br>
 			<h1>Клубные карты</h1>
 			<div class="cc_block">
 
 				<div class="">
 					<h2>STANDART</h2>
-					<div class="cc_inf"><img src="Resources/1.jpg">Групповые занятия по расписанию</div>
-					<div class="cc_inf"><img src="Resources/1.jpg">Самостоятельные тренировки в тренажерном зале</div>
-					<div class="cc_inf"><img src="Resources/1.jpg">1 фитнес-тестирование</div>
-					<div class="cc_inf"><img src="Resources/1.jpg">3 персональных тренировок</div>
+					<div class="cc_infs">
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Групповые занятия по расписанию</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Посещение тренажерного зала</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">1 фитнес-тестирование</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">3 персональных тренировок</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">1 гостевой визит</div>
+					</div>
 					<? session_start();
 					if (isset($_SESSION['Email']) && $_SESSION['Status'] == 1)
 							echo "<button onclick=\"openCc_form(1);\" class=\"button\">Оставить заявку</button>";
@@ -54,15 +59,17 @@
 				</div>
 				<div>
 					<h2>VIP</h2>
-					<div><img src="Resources/group.png">Групповые занятия по расписанию</div>
-					<div><img src="Resources/1.jpg">Самостоятельные тренировки в тренажерном зале</div>
-					<div><img src="Resources/1.jpg">2 фитнес-тестирования</div>
-					<div><img src="Resources/1.jpg">10 персональных тренировок</div>
-					<div><img src="Resources/1.jpg">Полотенце</div>
-					<div><img src="Resources/1.jpg">Индивидуальный шкафчик</div>
-					<div><img src="Resources/1.jpg">5 сеансов массажа</div>
-					<div><img src="Resources/1.jpg">Выбор персонального тренера в ЛК</div>
-					<div><img src="Resources/1.jpg">5 гостевых визитов</div>
+					<div class="cc_infs">
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Групповые занятия по расписанию</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Посещение тренажерного зала</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">2 фитнес-тестирования</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">10 персональных тренировок</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">5 сеансов массажа</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Индивидуальный шкафчик и полотенце</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.jpg">5 гостевых визитов</div>
+					
+					
+</div>
 					<?
 						if (isset($_SESSION['Email']) && $_SESSION['Status'] == 1)
 						echo "<button onclick=\"openCc_form(2);\" class=\"button\">Оставить заявку</button>";
