@@ -22,10 +22,10 @@
 					<h2>STANDART</h2>
 					<div class="cc_infs">
 					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Групповые занятия по расписанию</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Посещение тренажерного зала</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">1 фитнес-тестирование</div>
+					<div class="cc_inf"><img alt="" src="Resources/5.webp">Посещение тренажерного зала</div>
+					<div class="cc_inf"><img alt="" src="Resources/4.webp">1 фитнес-тестирование</div>
 					<div class="cc_inf"><img alt="" src="Resources/1.jpg">3 персональных тренировок</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">1 гостевой визит</div>
+					<div class="cc_inf"><img alt="" src="Resources/3.webp">1 гостевой визит</div>
 					</div>
 					<? session_start();
 					if (isset($_SESSION['Email']) && $_SESSION['Status'] == 1)
@@ -61,11 +61,11 @@
 					<h2>VIP</h2>
 					<div class="cc_infs">
 					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Групповые занятия по расписанию</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Посещение тренажерного зала</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">2 фитнес-тестирования</div>
+					<div class="cc_inf"><img alt="" src="Resources/5.webp">Посещение тренажерного зала</div>
+					<div class="cc_inf"><img alt="" src="Resources/4.webp">2 фитнес-тестирования</div>
 					<div class="cc_inf"><img alt="" src="Resources/1.jpg">10 персональных тренировок</div>
 					<div class="cc_inf"><img alt="" src="Resources/1.jpg">5 сеансов массажа</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Индивидуальный шкафчик и полотенце</div>
+					<div class="cc_inf"><img alt="" src="Resources/1.webp">Индивидуальный шкафчик и полотенце</div>
 					<div class="cc_inf"><img alt="" src="Resources/1.jpg">5 гостевых визитов</div>
 					
 					
@@ -77,14 +77,14 @@
 				?>
 				</div>				
 			</div>
-			<span>
+			<div><center>
 				<? if (!isset($_SESSION['Email'])) {
-					echo "Еще не зарегистрированы?<br>";
+					echo "Желаете приобрести клубную карту?<br>";
 					if ($_SESSION['PROV'] == false)
 						echo "<button class=\"button\" onclick='openReg();'>Войти/Зарегистрироваться</button>";
 				}
-				?>
-			</span>		
+				?></center>
+			</div>		
 		</div>
 	</div>
 	<?php require_once ('footer.php'); ?>

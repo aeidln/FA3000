@@ -158,39 +158,21 @@ if ($_SESSION['Status'] != 10) {
             </div>
             <div class="adm_body">
                 <h3>Клубные карты</h3>
-
-                <?php
-                $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-                mysqli_select_db($link, "db") or die("А нет такой бд!");
-                $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Format FROM club_cards c, users u where c.ID_tr=u.ID");
-                echo "<table class='tb_adm'><thead><tr>";
-                echo "<th>Тариф</th>";
-                echo " <th>Длительность</th>";
-                echo "<th>Дата начала</th>";
-                echo "<th>Дата окончания</th>";
-                echo " <th>Вид</th>";
-                echo " <th>Тренер</th>";
-                echo "</tr></thead><tbody>";
-                while ($cc = mysqli_fetch_array($rows)) {
-
-
-                    echo "<tr>";
-                    if ($cc['Card_type'] == 1)
-                        echo "<td>STANDART";
-                    else if ($cc['Card_type'] == 2)
-                        echo "<td>VIP";
-                    echo "<td>" . $cc['Duration'] . " месяцев";
-                    echo "<td>" . $cc['Date_start'] . "<Br>";
-                    echo "<td>" . $cc['Date_end'] . "<Br>";
-                    echo "<td>" . $cc['Format'] . "<Br>";
-                    echo "<td>" . $cc['FIO'] . "<Br>";
-                    echo "</tr>";
-
-
-                }
-                echo "</tbody></table>";
-
-                ?>
+                <table class="tb_adm">
+                    <thead>
+                        <tr>
+                            <th>Тариф</th>
+                            <th>Длительность</th>
+                            <th>Дата начала</th>
+                            <th>Дата окончания</th>
+                            <th>Вид</th>
+                            <th>Тренер</th>
+                        </tr>
+                    </thead>
+                    <tbody id="b_cc">
+                        <? require_once ("b_cc.php"); ?>
+                    </tbody>
+                </table>
             </div>
             <div class="adm_body">
                 <h3>Редактирование текста</h3>
@@ -249,26 +231,26 @@ if ($_SESSION['Status'] != 10) {
 </html>
 <script language='javascript'>
 
-var val1="";
+    var val1 = "";
 
-   function ch_tx (){
-           var val = this.innerHTML;
-            var input = document.createElement("input");
-            input.value = val;
-            input.className = "text";
-            input.onblur = function () {
-                var val = this.value;
-                this.parentNode.innerHTML = val;
-                console.log(val);
-                edit_tx(1,1,val);
-            };            
-            this.innerHTML = "";
-            this.appendChild(input);
-            input.focus();
+    function ch_tx() {
+        var val = this.innerHTML;
+        var input = document.createElement("input");
+        input.value = val;
+        input.className = "text";
+        input.onblur = function () {
+            var val = this.value;
+            this.parentNode.innerHTML = val;
+            console.log(val);
+            edit_tx(1, 1, val);
+        };
+        this.innerHTML = "";
+        this.appendChild(input);
+        input.focus();
 
-   }
-    
-    
+    }
+
+
     const n = window.sessionStorage.getItem('pan_btn');
     console.log(n);
     document.getElementsByClassName("pan_btn")[n].style.border = "2px solid #da1717";
@@ -335,6 +317,13 @@ var val1="";
                 $("#b_rev").html(php);
             }
         });
+        $.ajax({
+            url: "b_сс.php",
+            cache: false,
+            success: function (php) {
+                $("#b_rev").html(php);
+            }
+        });
     }
     function ch_r(id, wd, f, val) {
         console.log(id, wd, f, val);
@@ -392,8 +381,6 @@ var val1="";
             }
         });
     }
-    function edit(id) {
-        openReg();
-    }
+    
 
 </script>

@@ -61,19 +61,23 @@
 			<button class="button" onclick='openReg();'>Войти/Зарегистрироваться</button>
 		</div>
 		<div id="cc_form" style="display: none;">
-		<form action="z_card.php" method="POST">
-			<h2>Заполните форму, чтобы оставить заявку</h2><br>
-			Выбранный тариф:
-			<br>
-			Срок карты:<br>
-			<input type="hidden" id="type_c" name="type_c"></input>
-			<input required value="12" type="radio" name="duration">12 месяцев</input>
-			<input required value="6" type="radio" name="duration">6 месяцев</input><br>
-			Формат карты:<br>
-			<input required value="Дневная" type="radio" name="format">Дневная</input>
-			<input required value="Полная" type="radio" name="format">Полная</input><br>
-			<button class="button" >Отправить заявку</button>
-</form>
+			<h2 class="mod_head">Заполните форму, чтобы оставить заявку</h2><br>
+			<form action="z_card.php" method="POST">
+				Выбранный тариф:<b id="type_val"></b>
+				<br>
+				Срок карты:<br>
+				<input type="hidden" id="type_c" name="type_c"></input>
+				<input required value="12" type="radio" name="duration">12 месяцев</input>
+				<input required value="6" type="radio" name="duration">6 месяцев</input><br>
+				Формат карты:<br>
+				<input required value="Дневная" type="radio" name="format">Дневная</input>
+				<input required value="Полная" type="radio" name="format">Полная</input><br>
+				<button class="button">Отправить заявку</button>
+			</form>
+		</div>
+		<div id="edit_data" style="display:none;">
+			<h2 class="mod_head">Редактировать профиль</h2><br>
+			<div id="b_editProf"></div>
 		</div>
 	</div>
 </div>
@@ -146,8 +150,41 @@ if (!isset($_SESSION['Email'])) {
 						window.location.href = "Cabinet.php";
 					}
 					else console.log(response);
+				}
+			});
+		}
 
+	}
+	function saveChg(id, status) {
+		FIO = document.getElementById("FIO").value;
+		Email = document.getElementById("Email").value;
+		Number = document.getElementById("Number").value;
+		Birthdate = document.getElementById("Birthdate").value;
+		Password = document.getElementById("Password").value;
+		// k = 0;
+		// for (i = 0; i <= 5; i++) {
+		// 	if (document.getElementsByClassName("error")[i].style.display == "block") {
+		// 		k++;
+		// 	}
+		// }
+		if (k == 0) {
+			$.ajax({
+				url: 'editProf.php',         /* Куда отправить запрос */
+				method: 'post',
+				async: false,          /* Метод запроса (post или get) */
+				// dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+				data: { Email: Email, FIO: FIO, Number: Number, Birthdate: Birthdate, Status: Status },     /* Данные передаваемые в массиве */
+				success: function (response) {
 
+					if (response == -1) {
+						mail.style.borderColor = "red";
+						document.getElementsByClassName("error")[2].style.display = "block";
+						document.getElementsByClassName("error")[2].innerHTML = "Такой логин уже занят. Пожалуйста, выберите другой логин.";
+					}
+					else if (response == 1) {
+						window.location.href = "Cabinet.php";
+					}
+					else console.log(response);
 				}
 			});
 		}
@@ -258,36 +295,62 @@ if (!isset($_SESSION['Email'])) {
 	//   }
 	// });
 	function closeMod() {
-	document.body.style.overflow = "";
-	document.getElementsByClassName("modal")[0].style.display = "none";
-	document.getElementById("reklama").style.display = "none";
-	document.getElementById("registration").style.display = "none";
+		document.body.style.overflow = "";
+		document.getElementsByClassName("modal")[0].style.display = "none";
+		document.getElementById("reklama").style.display = "none";
+		document.getElementById("registration").style.display = "none";
 
-}
-function openReg() {
-	document.body.style.overflow = "hidden";
-	document.getElementById("reklama").style.display = "none";
-	document.getElementsByClassName("modal")[0].style.display = "block";
-	document.getElementById("registration").style.display = "block";
-}
-function openRek() {
-	document.body.style.overflow = "hidden";
-	document.getElementsByClassName("modal")[0].style.display = "block";
-	document.getElementById("registration").style.display = "none";
-	document.getElementById("reklama").style.display = "block";
-}
+	}
+	function openReg() {
+		document.body.style.overflow = "hidden";
+		document.getElementById("reklama").style.display = "none";
+		document.getElementsByClassName("modal")[0].style.display = "block";
+		document.getElementById("registration").style.display = "block";
+	}
+	function openRek() {
+		document.body.style.overflow = "hidden";
+		document.getElementsByClassName("modal")[0].style.display = "block";
+		document.getElementById("registration").style.display = "none";
+		document.getElementById("reklama").style.display = "block";
+	}
+	function contReg(code) {
+		document.getElementsByClassName("regCont")[code].style.display = "block";
+		if (code == 0) {
+			document.getElementsByClassName("regCont")[1].style.display = "none";
+			document.getElementById("vh").style.borderBottomColor = "#f73a3a";
+			document.getElementById("reg").style.borderBottomColor = "";
+		}
+		else {
+			document.getElementsByClassName("regCont")[0].style.display = "none";
+			document.getElementById("reg").style.borderBottomColor = "#f73a3a";
+			document.getElementById("vh").style.borderBottomColor = "";
+		}
+	}
 
+	function openCc_form(type_c) {
+		document.body.style.overflow = "hidden";
+		document.getElementsByClassName("modal")[0].style.display = "block";
+		document.getElementById("cc_form").style.display = "block";
+		document.getElementById("type_c").value = type_c;
+		console.log(type_c);
+		if (type_c == 1)
+			document.getElementById("type_val").innerHTML = "STANDART";
+		else if (type_c == 2)
+			document.getElementById("type_val").innerHTML = "VIP";
 
-function openCc_form(type_c) {
-	document.body.style.overflow = "hidden";
-	document.getElementsByClassName("modal")[0].style.display = "block";
-	document.getElementById("cc_form").style.display = "block";
-	a = document.getElementById("type_c").value = type_c;
-
-	// if (type_c == 1)
-	// 	document.getElementById("type_c").innerHTML = "STANDART";
-	// else if (type_c == 2)
-	// 	document.getElementById("type_c").innerHTML = "VIP";
-	
-}
+	}
+	function edit(id) {
+		document.body.style.overflow = "hidden";
+		document.getElementsByClassName("modal")[0].style.display = "block";
+		document.getElementById("edit_data").style.display = "block";
+		$.ajax({
+			url: 'b_editProf.php',         /* Куда отправить запрос */
+			method: 'post',          /* Метод запроса (post или get) */
+			dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+			data: { id: id },     /* Данные передаваемые в массиве */
+			success: function (data) {
+				$("#b_editProf").html(data);
+			}
+		});
+	}
 </script>

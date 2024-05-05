@@ -49,23 +49,17 @@ $conn->close();
             <div class="lk_blocks">
                 <div class="lk_b1">
                     <?php
-                    // Вывод информации о пользователе
-                    
+                    // Вывод информации о пользователе                    
                     echo "<h2>Здравствуйте,  $FIO !</h2>";
                     echo "<p>Email: $email</p>";
                     echo "<p>Номер телефона: $Number</p>";
                     echo "<p>Дата рождения: $birthdate</p>";
-
-                    if ($status == 1) {
-
-                    } elseif ($status == 10) {
-                        echo "<p>Роль: Администратор</p>";
-                        echo '<p><a href="Admin.php">Панель администратора</a></p>';
-                    }
+                    echo "<button onclick=edit(" . $ID."); class=\"button\">Изменить данные</button>";
+                    echo "<button onclick=edit(" . $ID."); class=\"button\">Изменить пароль</button>";
                     ?>
-                    <a href="Edit_lk.php">
-                        <button class="button">Редактировать данные</button>
-                    </a>
+                    
+                      
+                    
 
                 </div>
                 <div class="lk_b2">
