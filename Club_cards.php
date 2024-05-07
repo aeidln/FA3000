@@ -21,10 +21,10 @@
 				<div class="">
 					<h2>STANDART</h2>
 					<div class="cc_infs">
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Групповые занятия по расписанию</div>
-					<div class="cc_inf"><img alt="" src="Resources/5.webp">Посещение тренажерного зала</div>
+					<div class="cc_inf"><img alt="" src="Resources/8.webp">Групповые занятия по расписанию</div>
+					<div class="cc_inf"><img alt="" src="Resources/6.webp">Посещение тренажерного зала</div>
 					<div class="cc_inf"><img alt="" src="Resources/4.webp">1 фитнес-тестирование</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">3 персональных тренировок</div>
+					<div class="cc_inf"><img alt="" src="Resources/5.webp">3 персональных тренировок</div>
 					<div class="cc_inf"><img alt="" src="Resources/3.webp">1 гостевой визит</div>
 					</div>
 					<? session_start();
@@ -60,13 +60,13 @@
 				<div>
 					<h2>VIP</h2>
 					<div class="cc_infs">
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">Групповые занятия по расписанию</div>
-					<div class="cc_inf"><img alt="" src="Resources/5.webp">Посещение тренажерного зала</div>
+					<div class="cc_inf"><img alt="" src="Resources/8.webp">Групповые занятия по расписанию</div>
+					<div class="cc_inf"><img alt="" src="Resources/6.webp">Посещение тренажерного зала</div>
 					<div class="cc_inf"><img alt="" src="Resources/4.webp">2 фитнес-тестирования</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">10 персональных тренировок</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">5 сеансов массажа</div>
+					<div class="cc_inf"><img alt="" src="Resources/5.webp">10 персональных тренировок</div>
+					<div class="cc_inf"><img alt="" src="Resources/7.webp">5 сеансов массажа</div>
 					<div class="cc_inf"><img alt="" src="Resources/1.webp">Индивидуальный шкафчик и полотенце</div>
-					<div class="cc_inf"><img alt="" src="Resources/1.jpg">5 гостевых визитов</div>
+					<div class="cc_inf"><img alt="" src="Resources/3.webp">5 гостевых визитов</div>
 					
 					
 </div>

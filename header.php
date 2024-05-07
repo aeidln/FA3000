@@ -23,7 +23,7 @@
 						<li><a href="Group_lessons.php#gl7">Скаладром</a></li>
 					</ul>
 					<li><a href="Sport_medicine.php">Спортивная медицина</a></li>
-					<li><a href="Personal_tr.php">Персональные тренировки</a></li>
+					<!-- <li><a href="Personal_tr.php">Персональные тренировки</a></li> -->
 					<li><a href="Kids_fit.php">Детский фитнес</a></li>
 					<li><a href="Extra_serv.php">Дополнительные услуги</a></li>
 				</ul>
@@ -34,13 +34,13 @@
 					<li><a href="">Карты VIP</a></li>
 				</ul>
 			</div>
-			<div class="dropdown"><a href="">Ваши цели</a><i class="-hover"></i>
+			<!-- <div class="dropdown"><a href="">Ваши цели</a><i class="-hover"></i>
 				<ul class="dropdown-list">
 					<li><a href="Loss_weight.php">Снижение веса</a></li>
 					<li><a href="Musclues.php">Увеличение мышечной массы</a></li>
 					<li><a href="">Реабилитация</a></li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 		<div class="inf_menu">
 			<span class="inf_cont">

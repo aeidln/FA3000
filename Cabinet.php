@@ -54,8 +54,8 @@ $conn->close();
                     echo "<p>Email: $email</p>";
                     echo "<p>Номер телефона: $Number</p>";
                     echo "<p>Дата рождения: $birthdate</p>";
-                    echo "<button onclick=edit(" . $ID."); class=\"button\">Изменить данные</button>";
-                    echo "<button onclick=edit(" . $ID."); class=\"button\">Изменить пароль</button>";
+                    echo "<button onclick=openEdit(" . $ID."); class=\"button\">Изменить данные</button>";
+                    // echo "<button onclick=openEditPas(" . $ID."); class=\"button\">Изменить пароль</button>";
                     ?>
                     
                       

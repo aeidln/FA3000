@@ -5,7 +5,7 @@ $query = "SELECT * FROM users where ID=".$_POST['id'];
 $rows = mysqli_query($link, $query);
 while ($user = mysqli_fetch_array($rows)) {
      
-    echo "<input type=\"text\" class=\"textbox\" placeholder=\"ФИО\" name=\"FIO_ed\" id=\"FIO_ed_ed\" title=\"Введите ваше ФИО\" value='".$user['FIO']."'><br>";
+    echo "<input type=\"text\" class=\"textbox\" placeholder=\"ФИО\" name=\"FIO_ed\" id=\"FIO_ed\" title=\"Введите ваше ФИО\" value='".$user['FIO']."'><br>";
 	echo "<span class=\"error\"><br></span>";
     echo "<input type=\"text\" class=\"textbox\" placeholder=\"Email\" name=\"Email_ed\" id=\"Email_ed\" required title=\"Введите ваш email\" value='".$user['Email']."'><br>";
 	echo "<span class=\"error\"><br></span>";
@@ -14,5 +14,5 @@ while ($user = mysqli_fetch_array($rows)) {
 	echo "<span class=\"error\"><br></span>";
 	echo "<input type=\"date\" class=\"textbox\" name=\"Birthdate_ed\" id=\"Birthdate_ed\" title=\"Введите вашу дату рождения\" value='".$user['Birthdate']."'><br>";
 	echo "<span class=\"error\"><br></span>";
-	echo "<button onclick=\"\" class=\"button\">Сохранить</button>";
+	echo "<button onclick=\"saveChg(".$_POST['id'].", ".$_POST['Status'].");\" class=\"button\">Сохранить</button>";
 }

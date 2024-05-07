@@ -193,15 +193,12 @@ if ($_SESSION['Status'] != 10) {
                             echo "<tr>";
 
 
-                            // // echo "<form method='POST' action='edit_tx.php?ID=" . $preim['ID'] . "'>";
-                            echo "<td class ='abc' ondblclick='ch_tx();'>" . $preim['title'] . "</td>";
-                            echo "<td class ='abc' >" . $preim['text'] . "</td>";
-                            // echo "<td class ='abc' onchange='edit_tx(" . $preim['ID'] . ", text, this.value);>" . $preim['text'] . "</td>";
-                            // echo "<td><input name=\"title\" class=\"title\" type=\"text\" value=\"" . $preim['title'] . "\"></input></td>";
-                        
-                            // echo "<td><textarea name=\"text\" class=\"text\">" . $preim['text'] . "</textarea></td>";
-                            // echo "<button type=\"submit\" class=\"button\">Сохранить</button>";
-                            // echo "</form>";
+
+                            // echo "<td class ='abc' onchange='edit_tx();'>" . $preim['title'] . "</td>";
+                            // echo "<td class ='abc' >" . $preim['text'] . "</td>";
+                            // echo "<td class ='abc' onchange=\"edit_tx(" . $preim['ID'] . ", 'title', '".$preim['title']."');\" contenteditable>" . $preim['title'] . "</td>";
+                            echo "<td class ='abc' data-type='title' data-id='" . $preim['ID'] . "' contenteditable>" . $preim['title'] . "</td>";
+                            echo "<td class ='abc' data-type='text' data-id='" . $preim['ID'] . "' contenteditable>" . $preim['text'] . "</td>";
                             echo "</tr>";
                         }
                         ?>
@@ -231,24 +228,51 @@ if ($_SESSION['Status'] != 10) {
 </html>
 <script language='javascript'>
 
-    var val1 = "";
-
-    function ch_tx() {
-        var val = this.innerHTML;
-        var input = document.createElement("input");
-        input.value = val;
-        input.className = "text";
-        input.onblur = function () {
-            var val = this.value;
-            this.parentNode.innerHTML = val;
-            console.log(val);
-            edit_tx(1, 1, val);
-        };
-        this.innerHTML = "";
-        this.appendChild(input);
-        input.focus();
-
-    }
+    $(function () {
+        $('.abc').keypress(function (e) {
+            if (e.which == 13) return false;
+            var oldVal, newVal, type, id;
+            $('.abc').focus(function () {
+                oldVal = $(this).text();
+                id = $(this).data('id');
+                type = $(this).data('type');
+                console.log( id,  type, newVal);
+            }).blur(function () {
+                newVal = $(this).text();
+                if (newVal != oldVal) { 
+                    
+                    $.ajax({
+                        url: 'edit_tx.php',         /* Куда отправить запрос */
+                        method: 'post',
+                        async: false,             /* Метод запроса (post или get) */
+                        dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+                        data: { id: id, type: type, newVal: newVal },     /* Данные передаваемые в массиве */
+                        success: function (data) {  /* функция которая будет выполнена после успешного запроса.  */
+                            console.log(data);
+                            /* В переменной data содержится ответ от index.php. */
+                        }
+                    });
+                }
+            });
+        });
+    });
+    // var a;
+    //     document.querySelectorAll('.abc').forEach(function (element, index) {
+    //         element.ondblclick = function () {
+    //             var val = this.innerHTML;
+    //             var input = document.createElement("input");
+    //             if (index % 2 == 1) input.className = "text";
+    //             else input.className = "title";
+    //             input.value = val;
+    //             input.onblur = function () {
+    //                 var val = this.value;
+    //                 this.parentNode.innerHTML = val;
+    //             };
+    //             this.innerHTML = "";
+    //             this.appendChild(input);
+    //             input.focus();
+    //         };
+    //     });
 
 
     const n = window.sessionStorage.getItem('pan_btn');
@@ -276,7 +300,6 @@ if ($_SESSION['Status'] != 10) {
                 $("#b_tr").html(php); /* В переменной data содержится ответ от index.php. */
             }
         });
-
     }
     function zav_z(id, st, type_z) {
         $.ajax({
@@ -318,10 +341,10 @@ if ($_SESSION['Status'] != 10) {
             }
         });
         $.ajax({
-            url: "b_сс.php",
+            url: "b_cc.php",
             cache: false,
             success: function (php) {
-                $("#b_rev").html(php);
+                $("#b_cc").html(php);
             }
         });
     }
@@ -338,9 +361,9 @@ if ($_SESSION['Status'] != 10) {
                 myFunction();/* В переменной data содержится ответ от index.php. */
             }
         });
-
     }
     function edit_tx(id, type, val) {
+
         console.log(id, type, val);
         // $.ajax({
         //     url: 'edit_tx.php',         /* Куда отправить запрос */
@@ -381,6 +404,6 @@ if ($_SESSION['Status'] != 10) {
             }
         });
     }
-    
+
 
 </script>

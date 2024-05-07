@@ -155,39 +155,47 @@ if (!isset($_SESSION['Email'])) {
 		}
 
 	}
-	function saveChg(id, status) {
-		FIO = document.getElementById("FIO").value;
-		Email = document.getElementById("Email").value;
-		Number = document.getElementById("Number").value;
-		Birthdate = document.getElementById("Birthdate").value;
-		Password = document.getElementById("Password").value;
+	function saveChg(ID, Status) {
+		FIO = document.getElementById("FIO_ed").value;
+		Email = document.getElementById("Email_ed").value;
+		Number = document.getElementById("Number_ed").value;
+		Birthdate = document.getElementById("Birthdate_ed").value;
 		// k = 0;
 		// for (i = 0; i <= 5; i++) {
 		// 	if (document.getElementsByClassName("error")[i].style.display == "block") {
 		// 		k++;
 		// 	}
 		// }
-		if (k == 0) {
-			$.ajax({
-				url: 'editProf.php',         /* Куда отправить запрос */
-				method: 'post',
-				async: false,          /* Метод запроса (post или get) */
-				// dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-				data: { Email: Email, FIO: FIO, Number: Number, Birthdate: Birthdate, Status: Status },     /* Данные передаваемые в массиве */
-				success: function (response) {
-
-					if (response == -1) {
-						mail.style.borderColor = "red";
-						document.getElementsByClassName("error")[2].style.display = "block";
-						document.getElementsByClassName("error")[2].innerHTML = "Такой логин уже занят. Пожалуйста, выберите другой логин.";
-					}
-					else if (response == 1) {
-						window.location.href = "Cabinet.php";
-					}
-					else console.log(response);
+		// if (k == 0) {
+		$.ajax({
+			url: 'editProf.php',         /* Куда отправить запрос */
+			method: 'post',
+			async: false,          /* Метод запроса (post или get) */
+			// dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+			data: { ID: ID, Email: Email, FIO: FIO, Number: Number, Birthdate: Birthdate, Status: Status },     /* Данные передаваемые в массиве */
+			success: function (response) {
+				console.log(response);
+				if (response == 10) {
+					window.location.href = "Admin.php";
 				}
-			});
-		}
+				else if (response == 1) {
+					window.location.href = "Cabinet.php";
+				}
+				else if (response == 5)
+					window.location.href = "Cabinet_tr.php";
+
+				// if (response == -1) {
+				// 	mail.style.borderColor = "red";
+				// 	document.getElementsByClassName("error")[2].style.display = "block";
+				// 	document.getElementsByClassName("error")[2].innerHTML = "Такой логин уже занят. Пожалуйста, выберите другой логин.";
+				// }
+				// else if (response == 1) {
+				// 	window.location.href = "Cabinet.php";
+				// }
+				// else console.log(response);
+			}
+		});
+		// }
 
 	}
 	// const FIO_REGEXP = /^[а-яА-ЯЁё\-]+(\s[а-яА-ЯЁё\-]+)?(\s[а-яА-ЯЁё\-]+)?$/iu;
@@ -339,7 +347,7 @@ if (!isset($_SESSION['Email'])) {
 			document.getElementById("type_val").innerHTML = "VIP";
 
 	}
-	function edit(id) {
+	function openEdit(id) {
 		document.body.style.overflow = "hidden";
 		document.getElementsByClassName("modal")[0].style.display = "block";
 		document.getElementById("edit_data").style.display = "block";
@@ -347,7 +355,7 @@ if (!isset($_SESSION['Email'])) {
 			url: 'b_editProf.php',         /* Куда отправить запрос */
 			method: 'post',          /* Метод запроса (post или get) */
 			dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-			data: { id: id },     /* Данные передаваемые в массиве */
+			data: { id: id, status: status },     /* Данные передаваемые в массиве */
 			success: function (data) {
 				$("#b_editProf").html(data);
 			}

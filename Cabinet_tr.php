@@ -56,18 +56,9 @@ $conn->close();
                     echo "<p>Email: $email</p>";
                     echo "<p>Номер телефона: $Number</p>";
                     echo "<p>Дата рождения: $birthdate</p>";
-
-                    if ($status == 1) {
-
-                    } elseif ($status == 10) {
-                        echo "<p>Роль: Администратор</p>";
-                        echo '<p><a href="Admin.php">Панель администратора</a></p>';
-                    }
+                    echo "<button onclick=openEdit(" . $ID."); class=\"button\">Изменить данные</button>";
+                    // echo "<button onclick=openEditPas(" . $ID."); class=\"button\">Изменить пароль</button>";
                     ?>
-                    <a href="Edit_lk.php">
-                        <button class="button">Редактировать данные</button>
-                    </a>
-
                 </div>
                 <div class="lk_b2">
                     <h2>Расписание занятий</h2>
@@ -82,7 +73,7 @@ $conn->close();
                     <?php
                     $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
                     mysqli_select_db($link, "db") or die("А нет такой бд!");
-                    $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Vid FROM club_cards c, users u where c.ID_user=u.ID and ID_tr=" . $ID);
+                    $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Format FROM club_cards c, users u where c.ID_user=u.ID and ID_tr=" . $ID);
                     
                     if (mysqli_num_rows($rows) < 1) {
                         echo "<p>У вас еще нет клиентов</p>";
@@ -106,16 +97,16 @@ $conn->close();
                                 echo "<td>" . $cc['Duration'] . " месяцев";
                                 echo "<td>" . $cc['Date_start'] . "<Br>";
                                 echo "<td>" . $cc['Date_end'] . "<Br>";
-                                echo "<td>" . $cc['Vid'] . "<Br>";
+                                echo "<td>" . $cc['Format'] . "<Br>";
                                 
                                 echo "</tr></tbody></table>";
                         }
                     
                     }
                     ?>
-                    <a href="Add_cc.php">
+                    <!-- <a href="Add_cc.php">
                         <button class="button">Добавить клиента</button>
-                    </a>
+                    </a> -->
                 </div>
                 <div class="lk_b4">
                     <h2>Мое расписание</h2>
