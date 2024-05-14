@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Логин свободен, выполнение запроса на добавление пользователя
         $hash = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $conn->prepare("INSERT INTO users (FIO, Email, Number, Birthdate, Status, Hash) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssis", $FIO, $email, $number, $birthdate, $status, $hash);
+        $stmt->bind_param("ssssis", $FIO, $email, $number, $birthdate, $status, $hash);
         if ($stmt->execute()) {
             // Регистрация успешно завершена, сохранение информации в сессии и перенаправление на страницу cabinet.php
             

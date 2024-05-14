@@ -54,12 +54,12 @@ $conn->close();
                     echo "<p>Email: $email</p>";
                     echo "<p>Номер телефона: $Number</p>";
                     echo "<p>Дата рождения: $birthdate</p>";
-                    echo "<button onclick=openEdit(" . $ID."); class=\"button\">Изменить данные</button>";
+                    echo "<button onclick=openEdit(" . $ID . "); class=\"button\">Изменить данные</button>";
                     // echo "<button onclick=openEditPas(" . $ID."); class=\"button\">Изменить пароль</button>";
                     ?>
-                    
-                      
-                    
+
+
+
 
                 </div>
                 <div class="lk_b2">
@@ -75,7 +75,32 @@ $conn->close();
                     <?php
                     $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
                     mysqli_select_db($link, "db") or die("А нет такой бд!");
-                    $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Format FROM club_cards c, users u where c.ID_tr=u.ID and ID_user=" . $ID);
+                    // $rows = mysqli_query($link, "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Format FROM club_cards c, users u where c.ID_tr=u.ID and ID_user=" . $ID);
+                    $rows = mysqli_query($link, "SELECT 
+                    ID_card, 
+                    Card_type, 
+                    Date_start, 
+                    Date_end,
+                    ID_user, 
+                    CASE 
+                        WHEN u.ID IS NULL THEN NULL 
+                        ELSE ID_tr 
+                    END AS ID_tr, 
+                    CASE 
+                        WHEN u.ID IS NULL THEN NULL 
+                        ELSE u.FIO 
+                    END AS FIO, 
+                    Duration, 
+                    Format, 
+                    c.Status 
+                FROM 
+                    club_cards c
+                LEFT JOIN 
+                    users u 
+                ON 
+                    c.ID_tr = u.ID 
+                WHERE 
+                    ID_user =" . $ID);
                     if (mysqli_num_rows($rows) < 1) {
                         echo "<p>У вас еще нет клубной карты</p>";
                         echo "<a href=\"Club_cards.php\">";
@@ -83,38 +108,43 @@ $conn->close();
                         echo "</a>";
                     } else {
                         while ($cc = mysqli_fetch_array($rows)) {
-
-                            if ($cc['ID_tr'] == NULL) {
-                                echo "Ваш тариф - VIP. Выберите тренера для дальнейших тренировок:";
-                                $rows1 = mysqli_query($link, "SELECT t.ID, u.FIO from trainers t, users u where t.ID=u.ID");
-                                echo "<select id=\"tr_names\" onchange=\"ch_tr()\">";
-                                echo "<option>Выберите тренера</option>";
-                                while ($tr = mysqli_fetch_array($rows1)) {
-                                    echo "<option value='" . $tr['ID'] . "'>" . $tr['FIO'] . "</option>";
-                                }
-                                echo "</select><BR>";
-                                echo "<a href=\"Club_cards.php\">";
-                                echo "<button class=\"button\">Сохранить</button>";
-                                echo "</a>";
+                            if ($cc['Status'] == 0) {
+                                echo "Ожидайте. Ваша заявка на карту обрабатывается.";
                             } else {
-                                echo "<table class='cab_tb'><thead><tr>";
-                                echo "<th>Тариф</th>";
-                                echo " <th>Длительность</th>";
-                                echo "<th>Дата начала</th>";
-                                echo "<th>Дата окончания</th>";
-                                echo " <th>Вид</th>";
-                                echo " <th>Тренер</th>";
-                                echo "</tr></thead><tbody><tr>";
-                                if ($cc['Card_type'] == 1)
-                                    echo "<td>STANDART";
-                                else if ($cc['Card_type'] == 2)
-                                    echo "<td>VIP";
-                                echo "<td>" . $cc['Duration'] . " месяцев";
-                                echo "<td>" . $cc['Date_start'] . "<Br>";
-                                echo "<td>" . $cc['Date_end'] . "<Br>";
-                                echo "<td>" . $cc['Format'] . "<Br>";
-                                echo "<td>" . $cc['FIO'] . "<Br>";
-                                echo "</tr></tbody></table>";
+                                if ($cc['ID_tr'] == NULL) {
+                                    echo "Ваш тариф - VIP. Выберите тренера для дальнейших тренировок:";
+                                    $rows1 = mysqli_query($link, "SELECT t.ID, u.FIO from trainers t, users u where t.ID=u.ID");
+                                    echo "<select id=\"tr_names\">";
+                                    echo "<option>Выберите тренера</option>";
+                                    while ($tr = mysqli_fetch_array($rows1)) {
+                                        echo "<option value='" . $tr['ID'] . "'>" . $tr['FIO'] . "</option>";
+                                    }
+                                    echo "</select><BR>";
+                                    echo "<button onclick='select_tr(" . $ID . ");' class=\"button\">Сохранить</button>";//id которое выбрали 
+                                    
+                    
+                                } else {
+                                    echo "<table class='cab_tb'><thead><tr>";
+                                    echo "<th>Тариф</th>";
+                                    echo " <th>Длительность</th>";
+                                    echo "<th>Дата начала</th>";
+                                    echo "<th>Дата окончания</th>";
+                                    echo " <th>Вид</th>";
+                                    echo " <th>Тренер</th>";
+                                    echo "</tr></thead><tbody><tr>";
+                                    if ($cc['Card_type'] == 1)
+                                        echo "<td>STANDART";
+                                    else if ($cc['Card_type'] == 2)
+                                        echo "<td>VIP";
+                                    echo "<td>" . $cc['Duration'] . " месяцев";
+                                    echo "<td>" . $cc['Date_start'] . "<Br>";
+                                    echo "<td>" . $cc['Date_end'] . "<Br>";
+                                    echo "<td>" . $cc['Format'] . "<Br>";
+                                    echo "<td>" . $cc['FIO'] . "<Br>";
+                                    echo "</tr></tbody></table>";
+
+                                }
+
                             }
                         }
                     }
@@ -173,3 +203,18 @@ $conn->close();
 </body>
 
 </html>
+<script>
+    function select_tr(id) {
+        ID_tr = document.getElementById("tr_names").value;
+        $.ajax({
+            url: 'select_tr.php',         /* Куда отправить запрос */
+            method: 'post',          /* Метод запроса (post или get) */
+            dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+            data: { id: id, ID_tr: ID_tr },     /* Данные передаваемые в массиве */
+            success: function (data) {
+                console.log(data);
+                location.reload();
+            }
+        });
+    }
+</script>
