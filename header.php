@@ -2,6 +2,7 @@
 	<div class="header">
 		<a href="index.php"><img alt="" id="logo" src="Resources/logo_3000.png"></a>
 		<div class="main_nav">
+			
 			<div class="dropdown"><a href="">О клубе</a><i class="-hover"></i>
 				<ul class="dropdown-list">
 					<li><a href="https://fitness3000.ru/upload/29.05.2023.%D0%9E%D0%B1%D1%89%D0%B8%D0%B5%20%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0.pdf">Правила клуба</a></li>
@@ -41,7 +42,7 @@
 					<li><a href="">Реабилитация</a></li>
 				</ul>
 			</div> -->
-		</div>
+		
 		<div class="inf_menu">
 			<span class="inf_cont">
 				<a href="">
@@ -66,6 +67,8 @@
 				?>
 			</span>
 		</div>
+		</div>
+		
 		<div class="menu_burg" onclick="bopen();">
 			<span></span>
 		</div>
@@ -73,3 +76,17 @@
 	</div>
 </header>
 <?php require_once('modal.php'); ?>
+<script>
+	function bopen() {
+			const iconMenu = document.getElementsByClassName('menu_burg')[0];
+			const mainNav = document.getElementsByClassName('main_nav')[0];
+			if (Boolean(iconMenu.classList.contains('_active'))) {
+				mainNav.classList.remove('_active');
+				iconMenu.classList.remove('_active');
+			}
+			else {
+				mainNav.classList.toggle('_active');
+				iconMenu.classList.toggle('_active');
+			}
+		};
+</script>

@@ -20,7 +20,8 @@ $stmt->bind_param("sssis", $FIO_pr, $number_pr, $type, $status_pr, $date_pr);
 if ($stmt->execute()) {
     echo "<script>alert('Спасибо, ваша заявка отправлена!'); window.location.href = 'Index.php';</script>";
 } else {
-    echo "Ошибка при регистрации: " . $stmt->error;
+    
 }
 // Закрытие подготовленного запроса
 $stmt->close();
+$conn->close();
