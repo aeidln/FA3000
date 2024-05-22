@@ -21,7 +21,7 @@
 			<span id="span_1"><a
 					href="https://fitness3000.ru/upload/29.05.2023.%D0%9E%D0%B1%D1%89%D0%B8%D0%B5%20%D0%BF%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0.pdf">Правила
 					клуба</a></span>
-			<span style="float:right;"><a href="">Политика конфиденциальности</a></span>
+			<span style="float:right;"><a href="Resources/polit.pdf">Политика конфиденциальности</a></span>
 		</div>
 		<script src="3000_script.js"></script>
 

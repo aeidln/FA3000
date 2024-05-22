@@ -15,13 +15,13 @@
 					<li><a href="Gym.php">Тренажерный зал</a></li>
 					<li><a href="Group_lessons.php">Групповые занятия</a></li>
 					<ul>
-						<li><a href="Group_lessons.php#gl1">Кросс-треннинг и единоборства</a></li>
+						<li><a href="Group_lessons.php#gl1">Кросс-тренинг и единоборства</a></li>
 						<li><a href="Group_lessons.php#gl2">Йога и гибкая сила</a></li>
 						<li><a href="Group_lessons.php#gl3">Танцевальный фитнес</a></li>
 						<li><a href="Group_lessons.php#gl4">Сила и выносливость</a></li>
 						<li><a href="Group_lessons.php#gl5">Кардиотренировки</a></li>
 						<li><a href="Group_lessons.php#gl6">Игровые виды</a></li>
-						<li><a href="Group_lessons.php#gl7">Скаладром</a></li>
+						<li><a href="Group_lessons.php#gl7">Скалодром</a></li>
 					</ul>
 					<li><a href="Sport_medicine.php">Спортивная медицина</a></li>
 					<!-- <li><a href="Personal_tr.php">Персональные тренировки</a></li> -->
@@ -31,8 +31,8 @@
 			</div>
 			<div class="dropdown"><a href="Club_cards.php">Клубные карты</a><i class="-hover"></i>
 				<ul class="dropdown-list">
-					<li><a href="">Карты STANDART</a></li>
-					<li><a href="">Карты VIP</a></li>
+					<li><a href="Club_cards.php#cc1">Карты STANDART</a></li>
+					<li><a href="Club_cards.php#cc2">Карты VIP</a></li>
 				</ul>
 			</div>
 			<!-- <div class="dropdown"><a href="">Ваши цели</a><i class="-hover"></i>

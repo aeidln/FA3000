@@ -9,10 +9,14 @@ if ($_POST['f'] == 2){
     $z=$z." Finish='".$_POST['val'];
 }
 if ($_POST['f'] == 3){
-    $z=$z." DayOff='".$_POST['val'];
+    $z=$z." TypeOfDay= '1";
+}
+if ($_POST['f'] == 4){
+    $z=$z." TypeOfDay= '2";
+}
+if ($_POST['f'] == 5){
+    $z=$z." TypeOfDay= '3";
 }
 $z=$z."' where ID_tr='" . $_POST['id']."' and WeekDay='".$_POST['wd']."'";
 echo $z;
 mysqli_query($link, $z);
-
-?>

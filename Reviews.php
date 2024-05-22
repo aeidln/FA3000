@@ -18,7 +18,7 @@
                 <legend>
                     <h2>Ваш отзыв</h2>
                 </legend>
-                <form method="post" action="rev.php">
+                <form id="revF">
                     <p>Ваша оценка</p>
                     <div class="rating-area">
                         <input type="radio" id="star-5" name="rating" value="5">
@@ -33,7 +33,7 @@
                         <label for="star-1" title="Оценка «1»"></label>
                     </div>
                     <p>Комментарий</p>
-                    <textarea name="comment"></textarea> <br>
+                    <textarea name="comment" id="textarea"></textarea> <br>
                     <button type="submit" class="button">Отправить отзыв</button>
                 </form>
             </fieldset>
@@ -123,5 +123,23 @@
     </div>
     <?php require_once('footer.php'); ?>
 </body>
-
 </html>
+<script>
+    document.getElementById('revF').addEventListener('submit', function (event) {
+		event.preventDefault();
+		rating = document.querySelector("[name='rating']").value;
+		comment = document.querySelector("[name='comment']").value;
+		$.ajax({
+			url: 'rev.php',
+			method: 'post',
+			async: false,
+			data: { rating: rating, comment: comment },
+			success: function (response) {
+				if (response==1){
+                    alert('Спасибо, ваш отзыв отправлен! Ожидайте подтверждения');
+                     window.location.href = 'Cabinet.php';
+				}
+			}
+		});
+	});
+</script>

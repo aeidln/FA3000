@@ -1,20 +1,31 @@
-<?// Подключение к базе данных
+<?
 require_once('conn.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Проверка подключения к серверу
 if ($conn->connect_error) {
     die("Невозможно подключиться к серверу: " . $conn->connect_error);
 }
-// Выполнение запроса к базе данных
-$query = "SELECT ID_card, Card_type, Date_start, Date_end, ID_user, ID_tr, u.FIO, Duration, Format FROM club_cards c, users u where c.ID_tr=u.ID";
+$query = "SELECT 
+        u_user.fio AS user_fio, 
+        u_trainer.fio AS trainer_fio,
+        cc.ID_Card, 
+        cc.Card_type, 
+        cc.Date_start, 
+        cc.Date_end, 
+        cc.Duration, 
+        cc.Format 
+    FROM 
+        club_cards cc
+    JOIN 
+        users u_user ON cc.ID_user = u_user.ID
+    JOIN 
+        users u_trainer ON cc.ID_tr = u_trainer.ID";
 $result = $conn->query($query);
-// Проверка выполнения запроса
 if (!$result) {
     die("Ошибка выполнения запроса: " . $conn->error);
 }
-// Обработка результатов запроса
 while ($cc = $result->fetch_assoc()) {
     echo "<tr>";
+    echo "<td>" . htmlspecialchars($cc['user_fio']) . "</td>";
     switch ($cc['Card_type']) {
         case 1:
             echo "<td>STANDART</td>";
@@ -24,15 +35,12 @@ while ($cc = $result->fetch_assoc()) {
             break;
         
     }
-    echo "<td>" . htmlspecialchars($cc['Duration']) . " месяцев";
+    echo "<td>" . htmlspecialchars($cc['Duration']) . " месяцев</td>";
     echo "<td>" . htmlspecialchars($cc['Date_start']) . "</td>";
     echo "<td>" . htmlspecialchars($cc['Date_end']) . "</td>";
     echo "<td>" . htmlspecialchars($cc['Format']) . "</td>";
-    echo "<td>" . htmlspecialchars($cc['FIO']) . "</td>";
-    
+    echo "<td>" . htmlspecialchars($cc['trainer_fio']) . "</td>;";
     echo "</tr>";
 }
-// Освобождение ресурсов
 $result->free();
-// Закрытие соединения
 $conn->close();

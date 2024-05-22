@@ -69,6 +69,59 @@ $conn->close();
 
                 </div>
                 <div class="lk_b3">
+                    <h2>Мое расписание</h2>
+                    <table class="cab_tb">
+                        <thead>
+                            <tr>
+                                <th>День недели</th>
+                                <th>Начало рабочего дня</th>
+                                <th>Конец рабочего дня</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <? $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
+                    mysqli_select_db($link, "db") or die("А нет такой бд!");
+                    $rows = mysqli_query($link, "SELECT * FROM tr_table WHERE ID_tr=" . $ID);
+                    while ($tr_t = mysqli_fetch_array($rows)) {
+                        if ($tr_t['DayOff']==1) echo "<tr style='background:#afafaf;'>";
+                        else echo "<tr>";
+                        switch ($tr_t['WeekDay']) {
+                            case 1:
+                                echo "<td>ПН</td>";
+                                break;
+                            case 2:
+                                echo "<td>ВТ</td>";
+                                break;
+                            case 3:
+                                echo "<td>СР</td>";
+                                break;
+                            case 4:
+                                echo "<td>ЧТ</td>";
+                                break;
+                            case 5:
+                                echo "<td>ПТ</td>";
+                                break;
+                            case 6:
+                                echo "<td>СБ</td>";
+                                break;
+                            case 7:
+                                echo "<td>ВС</td>";
+                                break;
+                        }
+                        echo "<td><input disabled  id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_start'] . "\" /></td>";
+                        echo "<td><input disabled id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_finish'] . "\" /></td>";
+
+                        echo "</tr>";
+                    } ?>
+
+
+                        </tbody>
+
+                    </table>
+                    
+
+                </div>
+                <div class="lk_b4" style="height:fit-content;">
                     <h2>Мои клиенты</h2>
                     <?php
                     $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
@@ -108,58 +161,7 @@ $conn->close();
                         <button class="button">Добавить клиента</button>
                     </a> -->
                 </div>
-                <div class="lk_b4">
-                    <h2>Мое расписание</h2>
-                    <table class="cab_tb">
-                        <thead>
-                            <tr>
-                                <th>День недели</th>
-                                <th>Начало рабочего дня</th>
-                                <th>Конец рабочего дня</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <? $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-                    mysqli_select_db($link, "db") or die("А нет такой бд!");
-                    $rows = mysqli_query($link, "SELECT * FROM tr_table WHERE ID_tr=" . $ID);
-                    while ($tr_t = mysqli_fetch_array($rows)) {
-                        echo "<tr>";
-                        switch ($tr_t['WeekDay']) {
-                            case 1:
-                                echo "<td>ПН</td>";
-                                break;
-                            case 2:
-                                echo "<td>ВТ</td>";
-                                break;
-                            case 3:
-                                echo "<td>СР</td>";
-                                break;
-                            case 4:
-                                echo "<td>ЧТ</td>";
-                                break;
-                            case 5:
-                                echo "<td>ПТ</td>";
-                                break;
-                            case 6:
-                                echo "<td>СБ</td>";
-                                break;
-                            case 7:
-                                echo "<td>ВС</td>";
-                                break;
-                        }
-                        echo "<td><input disabled  id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_start'] . "\" /></td>";
-                        echo "<td><input disabled id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_finish'] . "\" /></td>";
-
-                        echo "</tr>";
-                    } ?>
-
-
-                        </tbody>
-
-                    </table>
-                    
-
-                </div>
+                
             </div>
         </div>
     </div>

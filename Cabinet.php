@@ -27,6 +27,7 @@ $stmt->bind_result($ID, $FIO, $Number, $birthdate, $status);
 $stmt->fetch();
 $stmt->close();
 $conn->close();
+$_SESSION['ID']=$ID; 
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -185,6 +186,8 @@ $conn->close();
                                         echo "<td>Одобрен</td>";
                                     if ($st == 0)
                                         echo "<td>Не одобрен</td>";
+                                    
+                                    $d = 2;
                                     echo "</tr>";
                                     $k++;
                                 }
@@ -214,6 +217,18 @@ $conn->close();
             success: function (data) {
                 console.log(data);
                 location.reload();
+            }
+        });
+    }
+    function del(id, f) {
+        $.ajax({
+            url: 'delete.php',         /* Куда отправить запрос */
+            method: 'post',
+            async: false,             /* Метод запроса (post или get) */
+            dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+            data: { id: id, f: f },     /* Данные передаваемые в массиве */
+            success: function (data) {   /* функция которая будет выполнена после успешного запроса.  */
+                location.reload();/* В переменной data содержится ответ от index.php. */
             }
         });
     }

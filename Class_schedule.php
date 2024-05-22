@@ -26,10 +26,10 @@ $stmt->fetch();
 $stmt->close();
 
 
-$stmt = $conn->prepare("SELECT u.FIO FROM users u, club_cards cc WHERE cc.ID_tr=u.ID and cc.ID_user = ?");
+$stmt = $conn->prepare("SELECT u.FIO, cc.Card_type FROM users u, club_cards cc WHERE cc.ID_tr=u.ID and cc.ID_user = ?");
 $stmt->bind_param("s", $ID);
 $stmt->execute();
-$stmt->bind_result($tr_fio);
+$stmt->bind_result($tr_fio, $card_type);
 $stmt->fetch();
 $stmt->close();
 
@@ -87,9 +87,9 @@ $conn->close();
 								"<div>";
 							//ccskrf yf cnhfybwe uheggjdst nhtybhjdrb
 					
-							echo $b["название"] . "<br>";
+							echo "<b>" . $b["название"] . "</b>";
 							//ссылка на старницу тренеры
-							echo $b["тренер"] . "<br>";
+							echo "" . $b["тренер"] . "<br>";
 							echo "</div";
 							echo "</td>";
 
@@ -97,47 +97,66 @@ $conn->close();
 						echo "</tr>";
 					}
 					echo "</table>";
-					
-					
-					if ($status == 1){
-						$rows = mysqli_query($link, "SELECT tt.Time_start, tt.Time_finish, tt.WeekDay FROM club_cards c, users u, tr_table tt where c.ID_tr=u.ID and ID_user=" . $ID." and c.ID_tr=tt.ID_tr");
+
+
+					if ($status == 1) {
+						$rows = mysqli_query($link, "SELECT tt.Time_start, tt.Time_finish, tt.WeekDay, tt.TypeOfDay FROM club_cards c, users u, tr_table tt where c.ID_tr=u.ID and ID_user=" . $ID . " and c.ID_tr=tt.ID_tr");
 						if (mysqli_num_rows($rows) > 1) {
-							echo "<h2>Расписание тренера</h2>";
-							echo "Ваш тренер:".$tr_fio."<br>";
+							echo "<center><h2>Расписание вашего тренера</h2>";
+							echo "Ваш тренер: <b>" . $tr_fio . "</b><br>";
 							while ($tr_t = mysqli_fetch_array($rows)) {
-								
+
 								echo "<tr>";
 								switch ($tr_t['WeekDay']) {
 									case 1:
-										echo "Понедельник:";
+										echo "Понедельник: ";
 										break;
 									case 2:
-										echo "Вторник:";
+										echo "Вторник: ";
 										break;
 									case 3:
-										echo "Среда:";
+										echo "Среда: ";
 										break;
 									case 4:
-										echo "Четверг:";
+										echo "Четверг: ";
 										break;
 									case 5:
-										echo "Пятница:";
+										echo "Пятница: ";
 										break;
 									case 6:
-										echo "Суббота:";
+										echo "Суббота: ";
 										break;
 									case 7:
-										echo "Всокреснье:";
+										echo "Воскреснье: ";
 										break;
 								}
-								echo " c ".$tr_t['Time_start'];
-								echo " по ".$tr_t['Time_finish'];
+								switch ($tr_t['TypeOfDay']) {
+									case 1:
+										echo "Выходной день";
+										break;
+									case 2:
+										if ($card_type == 2) {
+											echo "c <b>" . date("H:i", strtotime($tr_t['Time_start']));
+											echo "</b> до <b>" . date("H:i", strtotime($tr_t['Time_finish'])) . "</b>";
+										}
+										else echo "<b>Для клиентов другого тарифа</b>";
+										break;
+									case 3:
+										if ($card_type == 1) {
+											echo " c <b>" . date("H:i", strtotime($tr_t['Time_start']));
+											echo "</b> до <b>" . date("H:i", strtotime($tr_t['Time_finish'])) . "</b>";
+										}
+										else echo "<b>Для клиентов другого тарифа</b>";
+										break;
+								}
 								echo "<br>";
 							}
+
+							echo "</center>";
 						}
 					}
-					
-                    
+
+
 					?>
 			</div>
 		</div>

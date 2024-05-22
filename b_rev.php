@@ -1,19 +1,14 @@
 <?php
-// Подключение к базе данных
 require_once('conn.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Проверка подключения к серверу
 if ($conn->connect_error) {
     die("Невозможно подключиться к серверу: " . $conn->connect_error);
 }
-// Выполнение запроса к базе данных
 $query = "SELECT r.ID, Email, Mark, Comment, Date, r.Status from reviews r , users u where r.ID_user=u.ID ";
 $result = $conn->query($query);
-// Проверка выполнения запроса
 if (!$result) {
     die("Ошибка выполнения запроса: " . $conn->error);
 }
-// Обработка результатов запроса
 while ($rev = $result->fetch_assoc()) {
     echo "<tr>";
     $d = 1;
@@ -38,7 +33,5 @@ while ($rev = $result->fetch_assoc()) {
     }
     echo "</tr>";
 }
-// Освобождение ресурсов
 $result->free();
-// Закрытие соединения
 $conn->close();

@@ -47,7 +47,6 @@ if ($_SESSION['Status'] != 10) {
                             <th>Номер телефона</th>
                             <th>Дата рождения</th>
                             <th>Статус</th>
-                            <th>Редактировать</th>
                             <th>Удалить</th>
                         </tr>
                     </thead>
@@ -99,7 +98,8 @@ if ($_SESSION['Status'] != 10) {
                             <th>Длительность карты</th>
                             <th>Фомат карты</th>
                             <th>Статус заявки</th>
-                            <th>Завершить</th>
+                            <th>Одобрить</th>
+                            <th>Отклонить</th>
                         </tr>
                     </thead>
                     <tbody id="b_z_card">
@@ -113,7 +113,6 @@ if ($_SESSION['Status'] != 10) {
                 <h3>Тренеры</h3>
                 <div>
                     <div class="tr_r">
-
                         <?php
                         $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
                         mysqli_select_db($link, "db") or die("А нет такой бд!");
@@ -124,10 +123,8 @@ if ($_SESSION['Status'] != 10) {
                             echo "<option value='" . $tr['ID'] . "'>" . $tr['FIO'] . "</option>";
                         }
                         echo "</select>"; ?>
-                        <button class="button"><img class="a_b" src="Resources/add_tr.png"></button>
-
+                        <button class="button" onclick="openTr();"><img class="a_b" src="Resources/add_tr.png"></button>
                         <table id="b_tr">
-
                             <? require_once ("tr_table.php"); ?>
                         </table>
                     </div>
@@ -161,6 +158,7 @@ if ($_SESSION['Status'] != 10) {
                 <table class="tb_adm">
                     <thead>
                         <tr>
+                            <th>Клиент</th>
                             <th>Тариф</th>
                             <th>Длительность</th>
                             <th>Дата начала</th>
@@ -191,9 +189,6 @@ if ($_SESSION['Status'] != 10) {
                         $rows = mysqli_query($link, "SELECT * from preim_ ");
                         while ($preim = mysqli_fetch_array($rows)) {
                             echo "<tr>";
-
-
-
                             // echo "<td class ='abc' onchange='edit_tx();'>" . $preim['title'] . "</td>";
                             // echo "<td class ='abc' >" . $preim['text'] . "</td>";
                             // echo "<td class ='abc' onchange=\"edit_tx(" . $preim['ID'] . ", 'title', '".$preim['title']."');\" contenteditable>" . $preim['title'] . "</td>";
@@ -401,6 +396,13 @@ if ($_SESSION['Status'] != 10) {
             cache: false,
             success: function (php) {
                 $("#b_rev").html(php);
+            }
+        });
+        $.ajax({
+            url: "b_z_card.php",
+            cache: false,
+            success: function (php) {
+                $("#b_z_card").html(php);
             }
         });
     }

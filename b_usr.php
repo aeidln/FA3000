@@ -1,19 +1,15 @@
 <?php
-// Подключение к базе данных
 require_once('conn.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Проверка подключения к серверу
 if ($conn->connect_error) {
     die("Невозможно подключиться к серверу: " . $conn->connect_error);
 }
-// Выполнение запроса к базе данных
 $query = "SELECT * FROM users";
 $result = $conn->query($query);
-// Проверка выполнения запроса
 if (!$result) {
     die("Ошибка выполнения запроса: " . $conn->error);
 }
-// Обработка результатов запроса
+$firstRow = $result->fetch_assoc();
 while ($user = $result->fetch_assoc()) {
     echo "<tr>";
     $d = 1;
@@ -35,11 +31,8 @@ while ($user = $result->fetch_assoc()) {
             echo "<td>Неизвестный статус</td>";
             break;
     }
-    echo "<td><a onclick='openEdit(" . htmlspecialchars($user['ID']) . ", " . htmlspecialchars($user['Status']) . ");'><img class='a_b' src=\"Resources/r.png\"></a></td>";
     echo "<td><a onclick='del(" . htmlspecialchars($user['ID']) . ", " . $d . ");'><img class='a_b' src=\"Resources/d.png\"></a></td>";
     echo "</tr>";
 }
-// Освобождение ресурсов
 $result->free();
-// Закрытие соединения
 $conn->close();

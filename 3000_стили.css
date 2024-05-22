@@ -139,11 +139,14 @@ hr {
 
 .dropdown a {
   text-decoration: none;
+  position: relative;
   color: #FFFFFF;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
-  transition: all 0.3s ease;
+  padding-bottom: 5px;
+  font-family: If_kica;
 }
+
 
 .dropdown {
   margin-top: 50px;
@@ -151,8 +154,22 @@ hr {
 
 }
 
-.dropdown a:hover {
-  text-shadow: 2px 2px 5px #000000;
+.dropdown a::after {
+  content: '';
+  position: absolute;
+  top:10;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transition: width 0.3s ease-in-out; 
+
+}
+
+
+.dropdown a:hover::after {
+  width: 100%;
 }
 
 .dropdown .-hover {
@@ -162,6 +179,9 @@ hr {
 .dropdown .-hover::after {
   content: '\25BC';
   font-size: 70%;
+    display: inline-block;
+    transform: scaleX(2);
+    margin: 5px;
 }
 
 .dropdown:hover .-hover::after {
@@ -286,11 +306,14 @@ hr {
   /* Увеличиваем масштаб */
 }
 
-
+span.required {
+  color: red;
+  font-size: 20px;
+}
 .usl {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 .hover-effect-scale {
@@ -496,6 +519,9 @@ h1 {
   top: 0;
   display: block;
 }
+html{
+  scroll-behavior: smooth;
+}
 
 /* Navigation item styles */
 div.sim-slider-arrow-left,
@@ -592,7 +618,6 @@ padding: 10px;
 }
 
 .tb_adm {
-  /* border: 3px solid #da1717; */
   margin: auto;
   text-align: justify;
   margin-bottom: 50px;
@@ -636,14 +661,60 @@ padding: 10px;
   width: 100%;
   padding: 5px 0px;
 }
-
-/* .pan_btn:first-child {
-  border: 2px solid #da1717;
-  border-radius: 5px;
-} */
-
 .pan_btn {
   border-radius: 5px;
+}
+.animated-element {
+  opacity: 1; /* Начальная прозрачность элемента */
+  animation: flyOut 2s ease forwards; /* Применяем анимацию */
+}
+
+@keyframes flyOut {
+  0% { opacity: 0; transform: translateY(30px); } /* Начальное состояние */
+  100% { opacity: 1; transform: translateY(0); } /* Конечное состояние */
+}
+.arrow {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin: auto;
+}
+
+.arrow::before, .arrow::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
+}
+
+.arrow::before {
+  transform: rotate(225deg);
+  border-color: rgb(255, 255, 255) transparent transparent rgb(255, 255, 255);
+  
+  top: 50%;
+  margin-top: -10px;
+}
+
+.arrow::after {
+  transform: rotate(225deg);
+  border-color: rgb(255, 255, 255) transparent transparent rgb(255, 255, 255);
+  
+  top: 70%;
+  margin-top: -10px;
+}
+
+@keyframes float {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-10px);
+  }
+}
+
+.arrow {
+  animation: float 2s infinite;
 }
 
 
@@ -775,7 +846,7 @@ span a {
   margin: 0;
 }
 
-#registration, #cc_form, #edit_data {
+#registration, #cc_form, #edit_data, #tr_form {
   text-align: center;
   padding: 30px 0px;
 }
@@ -818,7 +889,7 @@ span a {
 .mod_head{
   font-family: If_kica;
   text-align: center;
-
+  margin: 0;
 }
 
 .error {
@@ -985,7 +1056,7 @@ span a {
   padding: 20px;
   background: #ffffff;
   margin: 20px 10px;
-  width: 535px;
+  width: 45%;
   height: 170px;
 }
 
@@ -1032,7 +1103,7 @@ legend {
   padding: 0 20px;
 }
 
-textarea {
+#textarea {
   width: 100%;
   height: 200px;
   margin-bottom: 30px;
@@ -1148,16 +1219,37 @@ select {
 }
 
 .cab_tb{
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   margin-bottom: 10px;
   width: 100%;
   text-align: center;
 
 }
-.cab_tb th, .cab_tb td{
-  padding:3px;
-  border: 1px solid;
-
+.cab_tb thead th {
+	text-align: left;
+	padding: 10px 7px;
+	background: #d8d8d8;
+}
+.cab_tb thead tr th:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.cab_tb thead tr th:last-child {
+	border-radius: 0 8px 8px 0;
+}
+.cab_tb tbody td {
+	text-align: center;
+	padding: 10px 7px;
+	font-size: 14px;
+	vertical-align: middle;
+}
+.cab_tb tbody tr:nth-child(even){
+	background: #f3f3f3;
+}
+.cab_tb tbody tr td:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.cab_tb tbody tr td:last-child {
+	border-radius: 0 8px 8px 0;
 }
 
 
@@ -1180,6 +1272,7 @@ select {
 .eventCard {
   display: flex;
   flex-direction: column;
+  margin: 5px 3px;
 
   padding: 8px 10px 8px 34px;
   border: 1px solid;

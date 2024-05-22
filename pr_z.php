@@ -18,10 +18,7 @@ $type="pr";
 $stmt = $conn->prepare("INSERT INTO zayavki (FIO, Number, Type, Status, Date) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("sssis", $FIO_pr, $number_pr, $type, $status_pr, $date_pr);
 if ($stmt->execute()) {
-    echo "<script>alert('Спасибо, ваша заявка отправлена!'); window.location.href = 'Index.php';</script>";
-} else {
-    
+    echo 1;
 }
-// Закрытие подготовленного запроса
 $stmt->close();
 $conn->close();

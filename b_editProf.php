@@ -1,11 +1,17 @@
+
 <?php
-$link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-mysqli_select_db($link, "db") or die("А нет такой бд!");
+require_once('conn.php');
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Невозможно подключиться к серверу: " . $conn->connect_error);
+}
 $query = "SELECT * FROM users where ID=".$_POST['id'];
-$rows = mysqli_query($link, $query);
-while ($user = mysqli_fetch_array($rows)) {
-     
-    echo "<input type=\"text\" class=\"textbox\" placeholder=\"ФИО\" name=\"FIO_ed\" id=\"FIO_ed\" title=\"Введите ваше ФИО\" value='".$user['FIO']."'><br>";
+$result = $conn->query($query);
+if (!$result) {
+    die("Ошибка выполнения запроса: " . $conn->error);
+}
+while ($user = $result->fetch_assoc()) {
+	echo "<input type=\"text\" class=\"textbox\" placeholder=\"ФИО\" name=\"FIO_ed\" id=\"FIO_ed\" title=\"Введите ваше ФИО\" value='".$user['FIO']."'><br>";
 	echo "<span class=\"error\"><br></span>";
     echo "<input type=\"text\" class=\"textbox\" placeholder=\"Email\" name=\"Email_ed\" id=\"Email_ed\" required title=\"Введите ваш email\" value='".$user['Email']."'><br>";
 	echo "<span class=\"error\"><br></span>";
@@ -16,3 +22,9 @@ while ($user = mysqli_fetch_array($rows)) {
 	echo "<span class=\"error\"><br></span>";
 	echo "<button onclick=\"saveChg(".$_POST['id'].", ".$_POST['Status'].");\" class=\"button\">Сохранить</button>";
 }
+$result->free();
+$conn->close();
+
+     
+   
+

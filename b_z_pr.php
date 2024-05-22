@@ -1,19 +1,14 @@
 <?php
-// Подключение к базе данных
 require_once('conn.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
-// Проверка подключения к серверу
 if ($conn->connect_error) {
     die("Невозможно подключиться к серверу: " . $conn->connect_error);
 }
-// Выполнение запроса к базе данных
 $query = "SELECT * FROM zayavki WHERE Type='pr' ORDER BY CASE WHEN Status = 0 THEN 0 ELSE 1 END, Status";
 $result = $conn->query($query);
-// Проверка выполнения запроса
 if (!$result) {
     die("Ошибка выполнения запроса: " . $conn->error);
 }
-// Обработка результатов запроса
 while ($z_pr = $result->fetch_assoc()) {
     echo "<tr>";
     echo "<td>" . htmlspecialchars($z_pr['FIO']) . "</td>";
@@ -47,7 +42,5 @@ while ($z_pr = $result->fetch_assoc()) {
 
     echo "</tr>";
 }
-// Освобождение ресурсов
 $result->free();
-// Закрытие соединения
 $conn->close();

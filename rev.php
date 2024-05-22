@@ -5,10 +5,7 @@ if (!isset($_SESSION['Email'])) {
     header("Location: Index.php"); // Если не авторизован, перенаправляем на страницу входа
     exit();
 }
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "db";
+require_once('conn.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Ошибка подключения к базе данных: " . $conn->connect_error);
@@ -29,7 +26,7 @@ $stmt->close();
 $stmt = $conn->prepare("INSERT INTO reviews (ID_user, Mark, Comment, Date, Status) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("iissi", $ID_u, $Mark, $Comment, $Date_rev, $Status_rev);
 if ($stmt->execute()) {
-    echo "<script>alert('Спасибо, ваш отзыв отправлен! Ожидайте подтверждения'); window.location.href = 'Reviews.php';</script>";
+    echo 1;
 } else {
     echo "Ошибка:" . $stmt->error;
 }

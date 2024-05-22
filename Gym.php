@@ -21,7 +21,8 @@
 					и продуманное расположение обеспечивают максимальный комфорт. Все оборудование для фитнеса
 					поставляется ведущими мировыми брендами – Life Fitness, Hammer Strength и другими.
 				</div>
-				<div><img src="Resources/sl1.jpg"></div>
+				<img src="Resources/sl1.jpg">
+			</div>
 			</div>
 		</div>
 	</div>
