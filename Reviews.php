@@ -21,7 +21,7 @@
                 <form id="revF">
                     <p>Ваша оценка</p>
                     <div class="rating-area">
-                        <input type="radio" id="star-5" name="rating" value="5">
+                        <input type="radio" id="star-5" name="rating" value="5" required>
                         <label for="star-5" title="Оценка «5»"></label>
                         <input type="radio" id="star-4" name="rating" value="4">
                         <label for="star-4" title="Оценка «4»"></label>
@@ -33,7 +33,7 @@
                         <label for="star-1" title="Оценка «1»"></label>
                     </div>
                     <p>Комментарий</p>
-                    <textarea name="comment" id="textarea"></textarea> <br>
+                    <textarea name="comment" id="textarea" required></textarea> <br>
                     <button type="submit" class="button">Отправить отзыв</button>
                 </form>
             </fieldset>
@@ -111,8 +111,7 @@
                 
                 <button id="add_rBTN" class="button" onclick="openAddR();">Добавить отзыв</button>
                 <?php
-                session_start(); // Инициализация сессии                
-                // Проверка, авторизован ли пользователь
+                session_start();
                 if (!isset($_SESSION['Email']) || $_SESSION['Status']!=1) {
                     echo "<script> document.getElementById(\"add_rBTN\").disabled = true; </script>";    
                 }

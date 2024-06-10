@@ -25,14 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email_v = trim($_POST['Email_v']);
     $password_v = trim($_POST['Password_v']);
 
-    // Проверка соответствия логина и пароля
+    // Проверка соответствия логина
     $stmt = $conn->prepare("SELECT Email, Status, Hash FROM users WHERE Email = ?");
     $stmt->bind_param("s", $email_v);
     $stmt->execute();
     $stmt->store_result();
     $stmt->bind_result($email_v, $status, $hash);
     $stmt->fetch();
-
+    //проверка на соотвествие пароля хешу
     if ($stmt->num_rows > 0 && password_verify($password_v, $hash)) {
     // Авторизация успешна, сохранение информации в сессии и перенаправление на страницу кабинета
     $_SESSION['Email'] = $email_v;

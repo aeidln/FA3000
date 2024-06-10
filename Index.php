@@ -4,7 +4,6 @@
 <head>
 	<title>ФИТНЕС-АРЕНА 3000</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Фитнес-арена 3000">
 	<link rel="stylesheet" href="3000_стили.css" type="text/css">
 	<link rel="shortcut icon" href="Resources/icon.ico" type="image/png">
@@ -18,7 +17,6 @@
 	<div class="container" id="c1">
 		<div id="t1" class=" animated-element">
 			<h1>САМЫЙ ПРОСТОРНЫЙ ФИТНЕС В УФЕ</h1>
-
 			<p>ФИТНЕС-АРЕНА 3000 — это комфортное современное фитнес-пространство, где вы сможете достигать своих
 				целей<br>
 				и поддерживать здоровый образ жизни. Тренажеры ведущих мировых брендов, актуальные программы
@@ -30,9 +28,10 @@
 			</a>
 		</div>
 	</div>
-	<div class="container">
+	 <div class="container">
 		<div class="b1">
 			<h1 class="element">Преимущества клуба</h1>
+			
 			<?php
 			$rows = mysqli_query($link, "SELECT * from preim_ where id > 0");
 			$k = 0;
@@ -43,14 +42,12 @@
 					echo "<div class=\"desc\" style=\"display:none;\">";
 				echo "<h2>" . $preim['title'] . "</h2>";
 				echo "<p>" . $preim['text'] . "</p>";
-				echo "<a href=\" \"><button class=\"button\">Подробнее →</button></a>";
+				echo "<a href=\"" . $preim['link'] . "\"><button class=\"button\">Подробнее →</button></a>";
 				echo "</div>";
 				$k++;
 			}
 			?>
-
-
-			<div class="container">
+			<div class="container tr">
 				<div class="circ" onclick="usl_ch(0);">
 					<img alt="" src="Resources/gym.png"><br>
 					<p class="pod">Тренажерный<br> зал</p>
@@ -86,6 +83,7 @@
 						href="Resources/polit.pdf">политикой конфиденциальности.</a></p><br>
 				<button type="submit" class="button">Записаться</button>
 			</form>
+			
 			<h1 class="element">Действующие акции</h1>
 			<div class="cards">
 				<div class="card">
@@ -101,7 +99,8 @@
 							<s>19900 руб.</s><br>
 							<font color="#da1717">17900 руб.</font>
 						</p>
-						<button class="button">Купить карту</button>
+						<a href="Club_cards.php#cc1">
+							<button class="button">Купить карту</button></a>
 					</div>
 				</div>
 				<div class="card">
@@ -117,23 +116,17 @@
 							<s>22900 руб.</s><br>
 							<font color="#da1717">17900 руб.</font>
 						</p>
-						<button class="button">Купить карту</button>
+						<a href="Club_cards.php#cc2">
+							<button class="button">Купить карту</button></a>
 					</div>
 				</div>
 			</div>
+			
 			<a name="gallery"></a>
 			<h1 class="element">Галлерея</h1>
 			<div class="sim-slider">
 				<ul class="sim-slider-list">
 					<li><img src="http://pvbk.spb.ru/inc/slider/imgs/no-image.gif" alt="screen"></li>
-					<!-- <li class="sim-slider-element"><img src="Resources/sl1.jpg" alt="0"></li>
-					<li class="sim-slider-element"><img src="Resources/sl2.jpg" alt="1"></li>
-					<li class="sim-slider-element"><img src="Resources/sl3.jpg" alt="2"></li>
-					<li class="sim-slider-element"><img src="Resources/sl4.jpg" alt="3"></li>
-					<li class="sim-slider-element"><img src="Resources/sl5.jpg" alt="4"></li>
-					<li class="sim-slider-element"><img src="Resources/sl6.jpg" alt="5"></li>
-					<li class="sim-slider-element"><img src="Resources/sl7.jpg" alt="6"></li>
-					<li class="sim-slider-element"><img src="Resources/sl8.jpg" alt="7"></li> -->
 					<?php
 					$rows = mysqli_query($link, "SELECT * from gallery");
 					$k = 0;
@@ -149,21 +142,25 @@
 			</div>
 			<h1 class="element">Как до нас добраться?</h1>
 			<div class="map">
-
 				<div style="position:relative;overflow:hidden;">
 					<iframe
 						src="https://yandex.ru/map-widget/v1/?ll=56.008443%2C54.716535&mode=search&oid=1157680995&ol=biz&sctx=ZAAAAAgBEAAaKAoSCZj2zf3V%2F0tAEXAjZYukW0tAEhIJPu3w12SNmj8RcOoDyTuHgj8iBgABAgMEBSgKOABAlc0GSABqAnJ1nQHNzEw9oAEAqAEAvQFo36RgwgEF456DqATqAQDyAQD4AQCCAhzRhNC40YLQvdC10YEg0LDRgNC10L3QsCAzMDAwigIAkgIAmgIMZGVza3RvcC1tYXBz&sll=56.008443%2C54.716535&sspn=0.015525%2C0.005417&text=%D1%84%D0%B8%D1%82%D0%BD%D0%B5%20%D0%B0%D1%80%D0%B5%D0%BD%D0%B0%203000&z=16.54"
 						width="700px" height="400px" style="position:relative; border: none; margin-right:30px;">
 					</iframe>
 				</div>
-				<b>ВРЕМЯ РАБОТЫ:</b><br>
-				Будни с 07:00 до 24:00 Выходные с 09:00 до 21:00<br>
-				Отдел продаж: Будни с 10:00 до 21:00 Выходные с 10:00 до 20:00<br>
+				<div>
+					<h2>Ждем вас в гости! В будние дни - с 07:00 до 00:00<br>
+						В выходные дни - с 09:00 до 21:00 </h2>
+					<b>Отдел продаж:</b> Будни с 10:00 до 21:00<br>
+					Выходные с 10:00 до 20:00<br><br>
+					<b>Адрес:</b> Уфа, Менделеева, 134/7<br><br>
+					<b>Остановка:</b> Чайная фабрика.<br><br>
+					<b>Автобусы:</b> №51, №17 и др.<br><br>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="container" style="background-color: #000000;">
-
+	</div> 
+	 <div class="container" style="background-color: #000000;">
 		<form id="quest">
 			<h1 class="element">Остались вопросы?</h1>
 			<p>Мы перезвоним и ответим на них! </p>
@@ -171,12 +168,17 @@
 			<input name="Number_vp" id="Number_vp" type="text" class="textbox" placeholder="Введите номер телефона"><br>
 			<script>$("#Number_vp").mask("+7(999)999-99-99", { autoclear: false });</script>
 			<p><input required type="checkbox"> Я даю согласие на обработку персональных данных в соотвествии с <a
-						href="Resources/polit.pdf">политикой конфиденциальности.</a></p><br>
+					href="Resources/polit.pdf">политикой конфиденциальности.</a></p><br>
 			<button type="submit" class="button">Отправить</button>
 		</form>
-		<img alt="" id="wm" src="Resources/wm.png">
+		<div style="
+	display: flex;
+	align-items: flex-end;
+">
+			<img alt="" id="wm" src="Resources/wm.png">
+		</div>
 	</div>
-	<?php require_once ('footer.php'); ?>
+	<?php require_once ('footer.php'); ?> 
 </body>
 
 </html>
@@ -185,24 +187,24 @@
 	document.getElementsByClassName("pod")[0].style.color = "#ffffff";
 	document.getElementsByClassName("desc")[0].style.display = "block";
 
-	window.addEventListener('scroll', function() {
-  var elements = document.querySelectorAll('.element');
+	window.addEventListener('scroll', function () {
+		var elements = document.querySelectorAll('.element');
 
-  elements.forEach(function(element) {
-    var elementPosition = element.getBoundingClientRect().top;
-    var windowHeight = window.innerHeight;
+		elements.forEach(function (element) {
+			var elementPosition = element.getBoundingClientRect().top;
+			var windowHeight = window.innerHeight;
 
-    // Проверяем, если элемент находится в пределах видимой области окна
-    if (elementPosition < windowHeight && elementPosition > 0) {
-      element.classList.add('animated-element');
-    } else {
-      // Убираем класс анимации, если элемент находится за пределами видимости
-      element.classList.remove('animated-element');
-    }
-  });
-});
+			// Проверяем, если элемент находится в пределах видимой области окна
+			if (elementPosition < windowHeight && elementPosition > 0) {
+				element.classList.add('animated-element');
+			} else {
+				// Убираем класс анимации, если элемент находится за пределами видимости
+				element.classList.remove('animated-element');
+			}
+		});
+	});
 
-document.getElementById('prob').addEventListener('submit', function (event) {
+	document.getElementById('prob').addEventListener('submit', function (event) {
 		event.preventDefault();
 		FIO_pr = document.getElementById("FIO_pr").value;
 		Number_pr = document.getElementById("Number_pr").value;
@@ -212,7 +214,7 @@ document.getElementById('prob').addEventListener('submit', function (event) {
 			async: false,
 			data: { FIO_pr: FIO_pr, Number_pr: Number_pr },
 			success: function (response) {
-				if (response==1){
+				if (response == 1) {
 					alert("Заявка на пробное занятие успешно отправлена!");
 					location.reload()
 				}
@@ -227,10 +229,10 @@ document.getElementById('prob').addEventListener('submit', function (event) {
 			url: 'vp.php',
 			method: 'post',
 			async: false,
-			data: { FIO_vp: FIO_vp, Number_vp: Number_vp},
+			data: { FIO_vp: FIO_vp, Number_vp: Number_vp },
 			success: function (response) {
-				if (response==1){
-					alert("Заявка отпралвенаю Перезвоним в ближайшее время!");
+				if (response == 1) {
+					alert("Заявка отпралвена. Перезвоним в ближайшее время!");
 					location.reload()
 				}
 			}

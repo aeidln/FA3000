@@ -220,16 +220,4 @@ $_SESSION['ID']=$ID;
             }
         });
     }
-    function del(id, f) {
-        $.ajax({
-            url: 'delete.php',         /* Куда отправить запрос */
-            method: 'post',
-            async: false,             /* Метод запроса (post или get) */
-            dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-            data: { id: id, f: f },     /* Данные передаваемые в массиве */
-            success: function (data) {   /* функция которая будет выполнена после успешного запроса.  */
-                location.reload();/* В переменной data содержится ответ от index.php. */
-            }
-        });
-    }
 </script>

@@ -53,7 +53,12 @@ $conn->close();
 		<div class="container">
 			<div class="block">
 				<h1>Расписание занятий</h1>
-				<a href="Cabinet.php">
+				<?
+				if ($_SESSION['Status'] == 1)
+				echo "<a href='Cabinet.php'>";
+				elseif ($_SESSION['Status'] == 5)
+				echo "<a href='Cabinet_tr.php'>";
+				?>
 					<button class="button">🠔</button>
 				</a>
 				<table class="shedule">

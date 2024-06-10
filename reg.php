@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $birthdate = NULL;
     if ($number == "")
     $number = NULL;
+    //Проверка на занятость email при регистрации
     $stmt = $conn->prepare("SELECT Email FROM users WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();

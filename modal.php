@@ -20,7 +20,7 @@
 					<span class="error"><br></span>
 
 					<span class="required">*</span>
-					<input type="text" class="textbox required" placeholder="Email" name="Email" id="Email" title="Введите ваш emailю Формат: example@test.com"><br>
+					<input type="text" class="textbox required" placeholder="Email" name="Email" id="Email" title="Введите ваш email. Формат: example@test.com"><br>
 					<span class="error"><br></span>
 
 					<input type="text" class="textbox" placeholder="Номер телефона" name="Number" id="Number" title="Введите ваш номер телефона"><br>
@@ -210,7 +210,7 @@ if (!isset($_SESSION['Email'])) {
 		if (fio.value == "") {
 			fio.style.borderColor = "red";
 			document.getElementsByClassName("error")[1].style.display = "block";
-			document.getElementsByClassName("error")[1].innerHTML = "Поле ФИО не может быть пустым"
+			document.getElementsByClassName("error")[1].innerHTML = "Поле \"ФИО\" не может быть пустым"
 		}
 		else if (!isFullNameValid(fio.value)) {
 			fio.style.borderColor = "red";
@@ -234,7 +234,7 @@ if (!isset($_SESSION['Email'])) {
 		if (mail.value == "") {
 			mail.style.borderColor = "red";
 			document.getElementsByClassName("error")[2].style.display = "block";
-			document.getElementsByClassName("error")[2].innerHTML = "Поле Email не может быть пустым"
+			document.getElementsByClassName("error")[2].innerHTML = "Поле \"Email\" не может быть пустым"
 		}
 		else if (!isEmailValid(mail.value)) {
 			mail.style.borderColor = "red";
@@ -259,12 +259,12 @@ if (!isset($_SESSION['Email'])) {
 		if (password.value == "") {
 			password.style.borderColor = "red"
 			document.getElementsByClassName("error")[5].style.display = "block";
-			document.getElementsByClassName("error")[5].innerHTML = "Поле Пароль не может быть пустым";
+			document.getElementsByClassName("error")[5].innerHTML = "Поле \"Пароль\" не может быть пустым";
 		}
 		else if (!isPasswordValid(password.value)) {
 			password.style.borderColor = "red"
 			document.getElementsByClassName("error")[5].style.display = "block";
-			document.getElementsByClassName("error")[5].innerHTML = "Неверный пароль";
+			document.getElementsByClassName("error")[5].innerHTML = "Неверный пароль. Пароль должен содержать от 8 до 16 символов, не менее одной заглавной и строчной латинской букве";
 		}
 		else {
 			password.style.borderColor = "#39393d";

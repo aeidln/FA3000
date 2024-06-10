@@ -18,37 +18,38 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $ID_u = $_POST['u_id'];
 $Desc = $_POST['desc'];
 $Photo = $_POST['tr_ph'];
-// echo $_POST['desc'];
-// echo $_POST['tr_ph'];
+ // Установка дефолтных значений, если поля пустые
+if (empty($Desc)) {
+    $Desc = 'Описание тренера'; // Замените на нужное дефолтное значение
+}
+
+if (empty($Photo)) {
+    $Photo = 'tr_def.png'; // Замените на нужное дефолтное значение
+}
 
 $stmt = $conn->prepare("Update users SET status = 5 WHERE id = ?");
 $stmt->bind_param("i", $ID_u);
-if ($stmt->execute()) {
-    echo 1;
-} 
+$stmt->execute();
 $stmt->close();
+
 $stmt = $conn->prepare("INSERT INTO trainers (ID, Disc, Photo) VALUES (?, ?, ?)");
 $stmt->bind_param("iss", $ID_u, $Desc, $Photo);
-if ($stmt->execute()) {
-    echo 1;
-} 
-else {
-    echo "Ошибка:" . $stmt->error;
+$stmt->execute();
+$stmt->close();
+
+for($i=1; $i<=7; $i++){
+    $stmt = $conn->prepare("INSERT INTO tr_table (ID_tr, WeekDay)  VALUES (?, ?)");
+    $stmt->bind_param("ii", $ID_u, $i);
+    $stmt->execute();
+    $stmt->close();    
 }
-// for($i=1; $i<=7; $i++){
-//     $stmt = $conn->prepare("INSERT INTO tr_table (ID_tr, WeekDay)  VALUES (?, ?)");
-//     $stmt->bind_param("ii", $ID_u, $i);
-//     if ($stmt->execute()) {
-//         echo 1;
-//     } 
-//     $stmt->close();    
-// }
-
-//tr table
-//trainers
-//club cards удалить 
 
 
-// // Закрытие подготовленного запроса
-// $stmt->close();
+// Удаление записей из таблицы club_cards, где id пользователя равно $ID_u
+$stmt = $conn->prepare("DELETE FROM club_cards WHERE ID_user = ?");
+$stmt->bind_param("i", $ID_u);
+$stmt->execute();
+$stmt->close();
+
+
 ?>

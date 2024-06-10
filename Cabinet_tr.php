@@ -76,6 +76,7 @@ $conn->close();
                                 <th>День недели</th>
                                 <th>Начало рабочего дня</th>
                                 <th>Конец рабочего дня</th>
+                                <th>Тариф клиентов</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,7 +84,7 @@ $conn->close();
                     mysqli_select_db($link, "db") or die("А нет такой бд!");
                     $rows = mysqli_query($link, "SELECT * FROM tr_table WHERE ID_tr=" . $ID);
                     while ($tr_t = mysqli_fetch_array($rows)) {
-                        if ($tr_t['DayOff']==1) echo "<tr style='background:#afafaf;'>";
+                        if ($tr_t['TypeOfDay']==1) echo "<tr style='background:#afafaf;'>";
                         else echo "<tr>";
                         switch ($tr_t['WeekDay']) {
                             case 1:
@@ -110,6 +111,9 @@ $conn->close();
                         }
                         echo "<td><input disabled  id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_start'] . "\" /></td>";
                         echo "<td><input disabled id=\"appt-time\" type=\"time\" value=\"" . $tr_t['Time_finish'] . "\" /></td>";
+                        if ($tr_t['TypeOfDay']==2) echo "<td>VIP</td>";
+                        else if ($tr_t['TypeOfDay']==3) echo "<td>Standart</td>";
+                        else echo "<td></td>";
 
                         echo "</tr>";
                     } ?>

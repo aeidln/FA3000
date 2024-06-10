@@ -39,6 +39,16 @@
 					</a>
 				</div>
 				<div class="hover-effect-scale">
+				<a href="Climbing.php">
+					<div class="effect">
+						<img src="Resources/sl6.jpg" alt="">
+						<div class="caption">
+							<h3>Скалодром</h3>
+						</div>
+					</div>
+					</a>
+				</div>
+				<div class="hover-effect-scale">
 				<a href="Sport_medicine.php">
 					<div class="effect">
 						<img src="Resources/usl3.jpg" alt="">

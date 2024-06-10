@@ -21,8 +21,9 @@
 						<li><a href="Group_lessons.php#gl4">Сила и выносливость</a></li>
 						<li><a href="Group_lessons.php#gl5">Кардиотренировки</a></li>
 						<li><a href="Group_lessons.php#gl6">Игровые виды</a></li>
-						<li><a href="Group_lessons.php#gl7">Скалодром</a></li>
+						
 					</ul>
+					<li><a href="Climbing.php">Скалодром</a></li>
 					<li><a href="Sport_medicine.php">Спортивная медицина</a></li>
 					<!-- <li><a href="Personal_tr.php">Персональные тренировки</a></li> -->
 					<li><a href="Kids_fit.php">Детский фитнес</a></li>

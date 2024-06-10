@@ -398,6 +398,7 @@ span.required {
   border-radius: 50%;
   padding: 20px;
   transition: background-color 0.5s;
+  flex-direction: column;
 }
 
 .circ:hover {
@@ -422,8 +423,6 @@ h1 {
   padding: 70px;
   color: #FFFFFF;
   font-size: 20px;
-  width: 100%;
-  max-width: 1440px;
 }
 
 #quest .button:before {
@@ -1056,7 +1055,7 @@ span a {
   padding: 20px;
   background: #ffffff;
   margin: 20px 10px;
-  width: 45%;
+  width: 44%;
   height: 170px;
 }
 
@@ -1147,11 +1146,10 @@ button:disabled {
   filter: blur(2px);
   /* filter: grayscale(100%); */
 }
-
 .tr_card {
   position: relative;
-  height: 400px;
-  width: 400px;
+  height: 425px;
+  width: 268px;
   perspective: 2000px;
   margin: 10px;
   display: flex;
@@ -1175,8 +1173,6 @@ button:disabled {
   transition: 1s;
   background-color: #eeeeee;
   overflow: hidden;
-  padding-bottom: 15px;
-  padding-top: 10px;
 }
 
 .front img {
@@ -1190,7 +1186,7 @@ button:disabled {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 30px;
-
+  text-align: left;
 }
 
 .tr_card:hover>.front {
@@ -1604,5 +1600,47 @@ hr{
 }
 .uslgs img{
   width: 100%;
+}
+.arrow, .arrow::before, .arrow::after {
+  width: 100px;
+  height: 100px;
+}
+
+.arrow::before {  
+  top: 40%;
+}
+.circ{
+  width: 200px;
+  height: 200px;
+}
+.card button, .button{
+  width:100%;
+  font-size: 27px;
+}
+.textbox{
+  margin: 35px 0px;
+  font-size: 30px;
+  width: 80%;
+}
+
+#prob, #quest{
+  text-align: center;  
+  font-size: 30px;
+  margin-bottom: 70px;
+}
+.map{
+  flex-direction: column;
+  text-align: center;
+  font-size:30px
+}
+h1{
+  text-align: center;
+  font-size: 50px;
+}
+#wm{
+  display: none;
+}
+.container .tr {
+  flex-wrap: wrap;
 }
 }
