@@ -7,10 +7,7 @@ if (!isset($_SESSION['Email'])) {
 }
 
 // Подключение к базе данных
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "db";
+require_once ('conn.php');
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Проверка подключения к базе данных
 if ($conn->connect_error) {
@@ -18,24 +15,19 @@ if ($conn->connect_error) {
 }
 // Получение информации о пользователе из базы данных
 $email = $_SESSION['Email'];
-$stmt = $conn->prepare("SELECT ID, FIO, Number, Birthdate,  Status FROM users WHERE Email = ?");
+$stmt = $conn->prepare("SELECT ID FROM users WHERE Email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
-$stmt->bind_result($ID, $FIO, $Number, $birthdate, $status);
+$stmt->bind_result($ID);
 $stmt->fetch();
 $stmt->close();
 
-
-$stmt = $conn->prepare("SELECT u.FIO, cc.Card_type FROM users u, club_cards cc WHERE cc.ID_tr=u.ID and cc.ID_user = ?");
+$stmt = $conn->prepare("SELECT u.LastName, u.FirstName, u.Patronymic, cc.Card_type FROM users u, club_cards cc WHERE cc.ID_tr=u.ID and cc.ID_user = ?");
 $stmt->bind_param("s", $ID);
 $stmt->execute();
-$stmt->bind_result($tr_fio, $card_type);
+$stmt->bind_result($tr_ln, $tr_fn, $tr_p, $card_type);
 $stmt->fetch();
 $stmt->close();
-
-
-
-$conn->close();
 ?>
 <!DOCTYPE html>
 <td>
@@ -62,38 +54,39 @@ $conn->close();
 					<button class="button">🠔</button>
 				</a>
 				<table class="shedule">
-					<tr>
-						<th></th>
-						<th>ПН</th>
-						<th>ВТ</th>
-						<th>СР</th>
-						<th>ЧТ</th>
-						<th>ПТ</th>
-						<th>СБ</th>
-						<th>ВС</th>
-					</tr>
+					<tr>				
+						<th></th>		
 					<?php
+					$query_weekdays = "SELECT * FROM weekdays";
+					$result_weekdays = mysqli_query($conn, $query_weekdays);
+			
+					if ($result_weekdays) {
+						// Цикл для вывода заголовков дней недели
+						while ($weekday = mysqli_fetch_assoc($result_weekdays)) {
+							echo "<th>" . $weekday['WeekDay'] . "</th>";
+						}
+					}
+
+					
 					$link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
 					mysqli_select_db($link, "db") or die("А нет такой бд!");
 					for ($i = 10; $i < 20; $i++) {
 						echo "<tr>";
 						echo "<th id='time'>" . $i . ":00</th>";
-						$rows = mysqli_query($link, "SELECT WeekDay, TimeStart, ClassName, FIO FROM shedule sh, users u where TimeStart = '$i' and sh.Trainer=u.ID");
+						//поменять
+						$rows = mysqli_query($link, "SELECT WeekDay, TimeStart, ClassName, LastName, FirstName, Patronymic FROM sсhedule sh, users u where HOUR(TimeStart) = '$i' and sh.ID_tr=u.ID");
 						$a = array_fill(0, 7, array("время" => "", "название" => "", "тренер" => ""));
 						while ($r = mysqli_fetch_array($rows)) {
 							$a[$r['WeekDay'] - 1]["название"] = $r['ClassName'];
-							$a[$r['WeekDay'] - 1]["тренер"] = $r['FIO'];
+							$a[$r['WeekDay'] - 1]["тренер"] = $r['LastName']." ".$r['FirstName']." ".$r['Patronymic'];
 						}
 						foreach ($a as $b) {
 							echo "<td>";
 							if ($b["название"] != null)
 								echo "<div class=\"eventCard\">";
 							else
-								"<div>";
-							//ccskrf yf cnhfybwe uheggjdst nhtybhjdrb
-					
+								"<div>";					
 							echo "<b>" . $b["название"] . "</b>";
-							//ссылка на старницу тренеры
 							echo "" . $b["тренер"] . "<br>";
 							echo "</div";
 							echo "</td>";
@@ -104,37 +97,14 @@ $conn->close();
 					echo "</table>";
 
 
-					if ($status == 1) {
-						$rows = mysqli_query($link, "SELECT tt.Time_start, tt.Time_finish, tt.WeekDay, tt.TypeOfDay FROM club_cards c, users u, tr_table tt where c.ID_tr=u.ID and ID_user=" . $ID . " and c.ID_tr=tt.ID_tr");
+					if ($_SESSION['Status']== 1) {
+						$rows = mysqli_query($link, "SELECT tt.Time_start, tt.Time_finish, w.WeekDay, tt.TypeOfDay FROM club_cards c, users u, tr_timetable tt, weekdays w where w.ID=tt.WeekDay and c.ID_tr=u.ID and ID_user=" . $ID . " and c.ID_tr=tt.ID_tr");
 						if (mysqli_num_rows($rows) > 1) {
 							echo "<center><h2>Расписание вашего тренера</h2>";
-							echo "Ваш тренер: <b>" . $tr_fio . "</b><br>";
+							echo "Ваш тренер: <b>$tr_ln $tr_fn $tr_p</b><br>";
 							while ($tr_t = mysqli_fetch_array($rows)) {
-
 								echo "<tr>";
-								switch ($tr_t['WeekDay']) {
-									case 1:
-										echo "Понедельник: ";
-										break;
-									case 2:
-										echo "Вторник: ";
-										break;
-									case 3:
-										echo "Среда: ";
-										break;
-									case 4:
-										echo "Четверг: ";
-										break;
-									case 5:
-										echo "Пятница: ";
-										break;
-									case 6:
-										echo "Суббота: ";
-										break;
-									case 7:
-										echo "Воскреснье: ";
-										break;
-								}
+								echo $tr_t['WeekDay']." - ";
 								switch ($tr_t['TypeOfDay']) {
 									case 1:
 										echo "Выходной день";
@@ -160,8 +130,6 @@ $conn->close();
 							echo "</center>";
 						}
 					}
-
-
 					?>
 			</div>
 		</div>

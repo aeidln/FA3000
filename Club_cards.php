@@ -88,7 +88,7 @@
 			<div>
 				<center>
 					<? if (!isset($_SESSION['Email'])) {
-						echo "Желаете приобрести клубную карту?<br>";
+						echo "<h2>Желаете приобрести клубную карту?</h2>";
 						if ($_SESSION['PROV'] == false)
 							echo "<button class=\"button\" onclick='openReg();'>Войти/Зарегистрироваться</button>";
 					}

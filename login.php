@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password_v = trim($_POST['Password_v']);
 
     // Проверка соответствия логина
-    $stmt = $conn->prepare("SELECT Email, Status, Hash FROM users WHERE Email = ?");
+    $stmt = $conn->prepare("SELECT Email, Role, Hash FROM users WHERE Email = ?");
     $stmt->bind_param("s", $email_v);
     $stmt->execute();
     $stmt->store_result();

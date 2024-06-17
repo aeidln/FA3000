@@ -18,18 +18,14 @@
 			<?php
 			$link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
 			mysqli_select_db($link, "db") or die("А нет такой бд!");
-			$rows = mysqli_query($link, "SELECT u.FIO, t.Disc, t.Photo  from trainers t, users u where u.ID=t.ID");
-
+			$rows = mysqli_query($link, "SELECT u.LastName, u.FirstName, t.Description, t.PhotoPath from trainers t, users u where u.ID=t.ID");
 			while ($tr = mysqli_fetch_array($rows)) {
-				$firstName = substr($tr['FIO'], 0, strpos($tr['FIO'], ' ') + 1);
-				$IO = substr($tr['FIO'], strlen($firstName));
-				$lastName = substr($IO, 0, strpos($IO, ' '));
 				echo "<div class=tr_card>";
 				echo "	<div class=front>";
-				echo "<img src=\"Resources/".$tr['Photo']."\">";
-				echo "<h2>".$firstName.$lastName."</h2>";
+				echo "<img src=\"Resources/".$tr['PhotoPath']."\">";
+				echo "<h2>".$tr['LastName']." ".$tr['FirstName']."</h2>";
 				echo "	</div>";
-				echo "	<div class=back>".$tr['Disc']."</div>";
+				echo "	<div class=back>".$tr['Description']."</div>";
 				echo "</div>";
 			}
 			?>
