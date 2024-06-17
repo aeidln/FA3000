@@ -5,7 +5,7 @@ if ($conn->connect_error) {
     die("Невозможно подключиться к серверу: " . $conn->connect_error);
 }
 if ($_POST['type_z'] == 1) {
-    $stmt = $conn->prepare("UPDATE zayavki set Status= ? where ID= ?");
+    $stmt = $conn->prepare("UPDATE requests set Status= ? where ID= ?");
     $stmt->bind_param("ii", $_POST['st'], $_POST['id']);
     $stmt->execute();
     $stmt->close();

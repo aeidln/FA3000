@@ -1,7 +1,19 @@
-   <?php
-    $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-	mysqli_select_db($link, "db") or die("А нет такой таблицы!");
-	$query="Delete From gallery Where ID=".$_GET['ID'];
-	mysqli_query($link,$query);  
-	header('Location: Index.php#gallery');
-?>
+<?php
+require_once ('conn.php');
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+	die("Невозможно подключиться к серверу: " . $conn->connect_error);
+}
+$stmt = $conn->prepare("DELETE FROM gallery WHERE ID = ?");
+if ($stmt === false) {
+	die("Ошибка подготовки запроса: " . $conn->error);
+}
+$stmt->bind_param("i", $_GET['ID']);
+if ($stmt->execute()) {
+	header('Location: Admin.php');
+	exit();
+} else {
+	echo "Ошибка выполнения запроса: " . $stmt->error;
+}
+$stmt->close();
+$conn->close();

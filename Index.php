@@ -33,16 +33,16 @@
 			<h1 class="element">Преимущества клуба</h1>
 			
 			<?php
-			$rows = mysqli_query($link, "SELECT * from preim_ where id > 0");
+			$rows = mysqli_query($link, "SELECT * from edit_cont where id > 0");
 			$k = 0;
 			while ($preim = mysqli_fetch_array($rows)) {
 				if ($k == 0)
 					echo "<div class=\"desc\">";
 				else
 					echo "<div class=\"desc\" style=\"display:none;\">";
-				echo "<h2>" . $preim['title'] . "</h2>";
-				echo "<p>" . $preim['text'] . "</p>";
-				echo "<a href=\"" . $preim['link'] . "\"><button class=\"button\">Подробнее →</button></a>";
+				echo "<h2>" . $preim['Title'] . "</h2>";
+				echo "<p>" . $preim['Text'] . "</p>";
+				echo "<a href=\"" . $preim['Link'] . "\"><button class=\"button\">Подробнее →</button></a>";
 				echo "</div>";
 				$k++;
 			}
@@ -79,7 +79,7 @@
 				<input name="Number_pr" id="Number_pr" type="text" class="textbox" placeholder="Введите номер телефона"
 					required><br>
 				<script>$("#Number_pr").mask("+7(999)999-99-99", { autoclear: false });</script>
-				<p><input required type="checkbox"> Я даю согласие на обработку персональных данных в соотвествии с <a
+				<p class="polit"><input required type="checkbox"> Я даю согласие на обработку персональных данных в соответствии с <a
 						href="Resources/polit.pdf">политикой конфиденциальности.</a></p><br>
 				<button type="submit" class="button">Записаться</button>
 			</form>
@@ -123,7 +123,7 @@
 			</div>
 			
 			<a name="gallery"></a>
-			<h1 class="element">Галлерея</h1>
+			<h1 class="element">Галерея</h1>
 			<div class="sim-slider">
 				<ul class="sim-slider-list">
 					<li><img src="http://pvbk.spb.ru/inc/slider/imgs/no-image.gif" alt="screen"></li>
@@ -132,7 +132,7 @@
 					$k = 0;
 					while ($ph = mysqli_fetch_array($rows)) {
 						echo "<li class=\"sim-slider-element\">";
-						echo "<img alt=" . $k . " src=\"Resources\\" . $ph['name'] . "." . $ph['type'] . "\"></li>";
+						echo "<img alt=" . $k . " src=\"Resources\\" . $ph['Name'] . "." . $ph['Type'] . "\"></li>";
 					}
 					?>
 				</ul>
@@ -167,7 +167,7 @@
 			<input name="FIO_vp" id="FIO_vp" type="text" class="textbox" placeholder="Введите ФИО"><br>
 			<input name="Number_vp" id="Number_vp" type="text" class="textbox" placeholder="Введите номер телефона"><br>
 			<script>$("#Number_vp").mask("+7(999)999-99-99", { autoclear: false });</script>
-			<p><input required type="checkbox"> Я даю согласие на обработку персональных данных в соотвествии с <a
+			<p  class="polit"><input required type="checkbox"> Я даю согласие на обработку персональных данных в соответствии с <a
 					href="Resources/polit.pdf">политикой конфиденциальности.</a></p><br>
 			<button type="submit" class="button">Отправить</button>
 		</form>
@@ -208,7 +208,8 @@
 		event.preventDefault();
 		FIO_pr = document.getElementById("FIO_pr").value;
 		Number_pr = document.getElementById("Number_pr").value;
-		$.ajax({
+		if(isFullNameValid(FIO_pr)) {
+			$.ajax({
 			url: 'pr_z.php',
 			method: 'post',
 			async: false,
@@ -218,13 +219,18 @@
 					alert("Заявка на пробное занятие успешно отправлена!");
 					location.reload()
 				}
+				else console.log(response);
 			}
 		});
+		}
 	});
-	document.getElementById('quest').addEventListener('submit', function (event) {
+	document.getElementById('quest').addEventListener('submit', function (event) {		
 		event.preventDefault();
 		FIO_vp = document.getElementById("FIO_vp").value;
+		console.log(FIO_vp);
 		Number_vp = document.getElementById("Number_vp").value;
+		console.log(Number_vp);
+		if(isFullNameValid(FIO_vp)) {
 		$.ajax({
 			url: 'vp.php',
 			method: 'post',
@@ -232,11 +238,13 @@
 			data: { FIO_vp: FIO_vp, Number_vp: Number_vp },
 			success: function (response) {
 				if (response == 1) {
-					alert("Заявка отпралвена. Перезвоним в ближайшее время!");
+					alert("Заявка отправлена. Перезвоним в ближайшее время!");
 					location.reload()
 				}
+				else console.log(response);
 			}
 		});
+	}
 	});
 	function Sim(sldrId) {
 		let id = document.getElementById(sldrId);

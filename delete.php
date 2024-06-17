@@ -13,5 +13,4 @@
 	else if ($_POST['f'] == 3){
 		mysqli_query($link,$query3);  
 	}
-	// header("Location: Cabinet.php");
 ?>

@@ -9,36 +9,44 @@
 			<div class="regCont">
 				<input type="text" class="textbox" placeholder="Email" name="Email_v" id="Email_v" required><br>
 				<span class="error"><br></span>
-				<input type="password" class="textbox" placeholder="Пароль" name="Password_v" id="Password_v" required><br>
+				<input type="password" class="textbox" placeholder="Пароль" name="Password_v" id="Password_v"
+					required><br>
 				<button onclick="login()" class="button">Войти</button>
 			</div>
 			<div class="regCont" style="display: none;">
 				<form id="regF">
 
 					<span class="required">*</span>
-					<input type="text" class="textbox" placeholder="ФИО" name="FIO" id="FIO" title="Введите ваше ФИО. Только латиница и кириллица."><br>
+					<input type="text" class="textbox" placeholder="ФИО" name="FIO" id="FIO"
+						title="Введите ваше ФИО. Только латиница и кириллица."><br>
 					<span class="error"><br></span>
 
 					<span class="required">*</span>
-					<input type="text" class="textbox required" placeholder="Email" name="Email" id="Email" title="Введите ваш email. Формат: example@test.com"><br>
+					<input type="text" class="textbox required" placeholder="Email" name="Email" id="Email"
+						title="Введите ваш email. Формат: example@test.com"><br>
 					<span class="error"><br></span>
 
-					<input type="text" class="textbox" placeholder="Номер телефона" name="Number" id="Number" title="Введите ваш номер телефона"><br>
+					<input type="text" class="textbox" placeholder="Номер телефона" name="Number" id="Number"
+						title="Введите ваш номер телефона"><br>
 					<script>$("#Number").mask("+7(999)999-99-99", { autoclear: false });</script>
 					<span class="error"><br></span>
 
-					<input type="date" class="textbox" name="Birthdate" id="Birthdate" title="Введите вашу дату рождения"><br>
+					<input type="date" class="textbox" name="Birthdate" id="Birthdate"
+						title="Введите вашу дату рождения"><br>
 					<span class="error"><br></span>
 
 					<span class="required">*</span>
-					<input type="password" class="textbox" placeholder="Пароль" name="Password" id="Password" title="Пароль должен содержать не менее 8 и не более 16 символов, хотя бы по одной заглавной и строчной латинской букве"><br>
+					<input type="password" class="textbox" placeholder="Пароль" name="Password" id="Password"
+						title="Пароль должен содержать не менее 8 и не более 16 символов, хотя бы по одной заглавной и строчной латинской букве"><br>
 					<span class="error"><br></span>
 
 					<span class="required">*</span>
-					<input type="password" class="textbox" placeholder="Повтор пароля" name="R_Password" id="R_Password" title="Пароли должны сопадать"><br>
+					<input type="password" class="textbox" placeholder="Повтор пароля" name="R_Password" id="R_Password"
+						title="Пароли должны сопадать"><br>
 					<span class="error"><br></span>
 
-					<p><input id="polit" type="checkbox" required> Я даю согласие на обработку персональных данных в соотвествии с <a href="Resources/polit.pdf">политикой конфиденциальности.</a></p>
+					<p><input id="polit" type="checkbox" required> Я даю согласие на обработку персональных данных в
+						соответствии с <a href="Resources/polit.pdf">политикой конфиденциальности.</a></p>
 					<button type="submit" class="button">Зарегистрироваться</button>
 				</form>
 			</div>
@@ -50,34 +58,33 @@
 		<div id="tr_form" style="display: none;">
 			<h2 class="mod_head">Добавить тренера</h2><br>
 			<form action="add_tr.php" method="POST">
-			<label>Выберите пользователя:</label>
-			<?php
-                        $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-                        mysqli_select_db($link, "db") or die("А нет такой бд!");
-                        $rows = mysqli_query($link, "SELECT * from users u where Status = 1");
-                        echo "<select name='u_id' id=\"u_names\">";
-                        // echo "<option>Выберите пользователя</option>";
-                        while ($u = mysqli_fetch_array($rows)) {
-                            echo "<option value='" . $u['ID'] . "'>" . $u['FIO'] . "</option>";
-                        }
-                        echo "</select><br><br>	"; ?>
-						<label>Описание :</label><textarea name="desc"></textarea><br><br>
-						<label>Фотография:	</label><input type="file" name="tr_ph"><br><br>					
+				<label>Выберите пользователя:</label>
+				<?php
+				$link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
+				mysqli_select_db($link, "db") or die("А нет такой бд!");
+				$rows = mysqli_query($link, "SELECT * from users u where Role = 1");
+				echo "<select name='u_id' id=\"u_names\">";
+				while ($u = mysqli_fetch_array($rows)) {
+					echo "<option value='" . $u['ID'] . "'>" . htmlspecialchars($u['LastName'] . " " . $u['FirstName'] . " " . $u['Patronymic']) . "</option>";
+				}
+				echo "</select><br><br>	"; ?>
+				<label>Описание :</label><textarea name="desc"></textarea><br><br>
+				<label>Фотография: </label><input type="file" name="tr_ph"><br><br>
 				<button class="button">Добавить</button>
 			</form>
 		</div>
 		<div id="cc_form" style="display: none;">
-			<h2 class="mod_head">Заполните форму, чтобы оставить заявку</h2><br>
+			<h2 class="mod_head">Заполните форму, чтобы оставить заявку</h2><br><br>
 			<form action="z_card.php" method="POST">
 				Выбранный тариф:<b id="type_val"></b>
-				<br>
+				<br><br>
 				Срок карты:<br>
 				<input type="hidden" id="type_c" name="type_c"></input>
 				<input required value="12" type="radio" name="duration">12 месяцев</input>
-				<input required value="6" type="radio" name="duration">6 месяцев</input><br>
+				<input required value="6" type="radio" name="duration">6 месяцев</input><br><br>
 				Формат карты:<br>
 				<input required value="Дневная" type="radio" name="format">Дневная</input>
-				<input required value="Полная" type="radio" name="format">Полная</input><br>
+				<input required value="Полная" type="radio" name="format">Полная</input><br><br>
 				<button class="button">Отправить заявку</button>
 			</form>
 		</div>
@@ -168,37 +175,31 @@ if (!isset($_SESSION['Email'])) {
 		});
 	});
 	function saveChg(ID, Status) {
-			FIO = document.getElementById("FIO_ed").value;
-			Email = document.getElementById("Email_ed").value;
-			Number = document.getElementById("Number_ed").value;
-			Birthdate = document.getElementById("Birthdate_ed").value;
-			// k = 0;
-			// for (i = 0; i <= 5; i++) {
-			// 	if (document.getElementsByClassName("error")[i].style.display == "block") {
-			// 		k++;
-			// 	}
-			// }
-			// if (k == 0) {
-			$.ajax({
-				url: 'editProf.php',         /* Куда отправить запрос */
-				method: 'post',
-				async: false,          /* Метод запроса (post или get) */
-				// dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-				data: { ID: ID, Email: Email, FIO: FIO, Number: Number, Birthdate: Birthdate, Status: Status },     /* Данные передаваемые в массиве */
-				success: function (response) {
-					console.log(response);
-					if (response == 10) {
-						window.location.href = "Admin.php";
-					}
-					else if (response == 1) {
-						window.location.href = "Cabinet.php";
-					}
-					else if (response == 5)
-						window.location.href = "Cabinet_tr.php";
-					// // else alert("gjrf");
+		FIO = document.getElementById("FIO_ed").value;
+		Email = document.getElementById("Email_ed").value;
+		Number = document.getElementById("Number_ed").value;
+		Birthdate = document.getElementById("Birthdate_ed").value;
+			
+		$.ajax({
+			url: 'editProf.php',         /* Куда отправить запрос */
+			method: 'post',
+			async: false,          /* Метод запроса (post или get) */
+			// dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
+			data: { ID: ID, Email: Email, FIO: FIO, Number: Number, Birthdate: Birthdate, Status: Status },     /* Данные передаваемые в массиве */
+			success: function (response) {
+				console.log(response);
+				if (response == 10) {
+					window.location.href = "Admin.php";
 				}
-			});
-		}
+				else if (response == 1) {
+					window.location.href = "Cabinet.php";
+				}
+				else if (response == 5)
+					window.location.href = "Cabinet_tr.php";
+				// // else alert("gjrf");
+			}
+		});
+	}
 	const FIO_REGEXP = /^[а-яА-ЯЁёa-zA-Z\-]+(\s[а-яА-ЯЁёa-zA-Z\-]+)?(\s[а-яА-ЯЁёa-zA-Z\-]+)?$/iu;
 	const fio = document.getElementById("FIO");
 

@@ -484,8 +484,9 @@ h1 {
 }
 
 
-
-
+#quest .polit a:visited{
+  color: #ffffff;
+}
 
 
 .sim-slider img {
@@ -922,10 +923,12 @@ span a {
 
 .lk_b3 {
   width: 35%;
+  height: fit-content;
 }
 
 .lk_b4 {
   width: 50%;
+  height: fit-content;
 }
 
 .lk_b2 {
@@ -1107,6 +1110,10 @@ legend {
   height: 200px;
   margin-bottom: 30px;
   border: 1px solid #808080;
+  font-size:20px;
+  padding-left:10px;
+  padding-top:10px;
+
 }
 
 button:disabled:hover:before {

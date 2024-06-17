@@ -33,14 +33,12 @@
                         <label for="star-1" title="Оценка «1»"></label>
                     </div>
                     <p>Комментарий</p>
-                    <textarea name="comment" id="textarea" required></textarea> <br>
+                    <textarea placeholder="Введите комментарий" name="comment" id="textarea" required></textarea> <br>
                     <button type="submit" class="button">Отправить отзыв</button>
                 </form>
             </fieldset>
             <div class="rev_pan">
-
                 <div class="revs">
-
                     <?php
                     $month_list = array(
                         1 => 'января',
@@ -59,29 +57,23 @@
                     $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
                     mysqli_select_db($link, "db") or die("А нет такой бд!");
 
-                    $rows = mysqli_query($link, "SELECT FIO, Day(Date) ,Month(Date) ,Year(Date), Mark, Comment FROM reviews r, users u WHERE r.ID_user=u.ID and r.status=1 ");
+                    $rows = mysqli_query($link, "SELECT LastName, FirstName,  Day(Date) ,Month(Date) ,Year(Date), Mark, Comment FROM reviews r, users u WHERE r.ID_user=u.ID and r.status=1 ");
                     while ($r = mysqli_fetch_array($rows)) {
                         echo "<div class=\"rev\">";
                         echo "<div class=\"rev_top\">";
                         echo "<div>";
                         echo "" . $r['Day(Date)'] . ' ' . $month_list[$r['Month(Date)']] . ' ' . $r['Year(Date)'] . " года";
-                        echo "<p>" . substr($r['FIO'], 0, strrpos($r['FIO'], ' ')) . "</p>";
-                        echo "</div>";
-                        ?>
-                        <div class="rating-mini">
-                            <span class="<?php if ($r['Mark'] >= 1)
-                                echo 'active'; ?>"></span>
-                            <span class="<?php if ($r['Mark'] >= 2)
-                                echo 'active'; ?>"></span>
-                            <span class="<?php if ($r['Mark'] >= 3)
-                                echo 'active'; ?>"></span>
-                            <span class="<?php if ($r['Mark'] >= 4)
-                                echo 'active'; ?>"></span>
-                            <span class="<?php if ($r['Mark'] >= 5)
-                                echo 'active'; ?>"></span>
-                        </div>
-                    </div>
-                    <?php
+                        echo "<p>" . $r['LastName']." ". $r['FirstName'] . "</p>";
+                        echo "</div>";                        
+                        echo "<div class=\"rating-mini\">";
+                        for ($i=1; $i<=5; $i++){
+                            echo "<span class='";
+                            if ($r['Mark'] >= $i)
+                            echo 'active'; 
+                            echo "'></span>";
+                        }                           
+                    echo "</div>
+                    </div>";                
                     echo $r['Comment'] . "<br>";
                     echo "</div>";
                     $k++;

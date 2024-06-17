@@ -42,11 +42,13 @@ if ($_SESSION['Status'] != 10) {
                 <table class="tb_adm">
                     <thead>
                         <tr>
-                            <th>ФИО</th>
+                            <th>Фамилия</th>
+                            <th>Имя</th>
+                            <th>Отчество</th>
                             <th>Email</th>
                             <th>Номер телефона</th>
                             <th>Дата рождения</th>
-                            <th>Статус</th>
+                            <th>Роль</th>
                             <th>Удалить</th>
                         </tr>
                     </thead>
@@ -69,7 +71,6 @@ if ($_SESSION['Status'] != 10) {
                     </thead>
                     <tbody id="b_z_pr">
                         <? require_once ("b_z_pr.php"); ?>
-
                     </tbody>
                 </table>
                 <h3>Заявки на звонок</h3>
@@ -107,28 +108,34 @@ if ($_SESSION['Status'] != 10) {
 
                     </tbody>
                 </table>
-
             </div>
             <div class="adm_body">
                 <h3>Тренеры</h3>
                 <div>
                     <div class="tr_r">
                         <?php
-                        $link = mysqli_connect("localhost", "root", "") or die("Невозможно подключиться к серверу");
-                        mysqli_select_db($link, "db") or die("А нет такой бд!");
-                        $rows = mysqli_query($link, "SELECT t.ID, u.FIO from trainers t, users u where t.ID=u.ID");
+                        require_once ('conn.php');
+                        $conn = new mysqli($servername, $username, $password, $dbname);
+                        if ($conn->connect_error) {
+                            die("Невозможно подключиться к серверу: " . $conn->connect_error);
+                        }
+                        $query = "SELECT t.ID, u.LastName, u.FirstName, u.Patronymic FROM trainers t JOIN users u ON t.ID = u.ID";
+                        $rows = $conn->query($query);
+                        if (!$rows) {
+                            die("Ошибка выполнения запроса: " . $conn->error);
+                        }
                         echo "<select id=\"tr_names\" onchange=\"myFunction()\">";
                         echo "<option>Выберите тренера</option>";
-                        while ($tr = mysqli_fetch_array($rows)) {
-                            echo "<option value='" . $tr['ID'] . "'>" . $tr['FIO'] . "</option>";
+                        while ($tr = $rows->fetch_assoc()) {
+                            echo "<option value='" . htmlspecialchars($tr['ID']) . "'>" . htmlspecialchars($tr['LastName'] . " " . $tr['FirstName'] . " " . $tr['Patronymic']) . "</option>";
                         }
-                        echo "</select>"; ?>
+                        echo "</select>";
+                        ?>
                         <button class="button" onclick="openTr();"><img class="a_b" src="Resources/add_tr.png"></button>
                         <table id="b_tr">
                             <? require_once ("tr_table.php"); ?>
                         </table>
                     </div>
-
                 </div>
 
 
@@ -138,6 +145,7 @@ if ($_SESSION['Status'] != 10) {
                 <table class="tb_adm">
                     <thead>
                         <tr>
+                            <th>ФИО</th>
                             <th>Email</th>
                             <th>Оценка</th>
                             <th>Комментарий</th>
@@ -182,92 +190,74 @@ if ($_SESSION['Status'] != 10) {
                     <thead>
                         <th>Заголовок</th>
                         <th>Текст</th>
+                        <th>Ссылка</th>
+                        <th>Картинка</th>
                     </thead>
                     <tbody>
 
                         <?php
-                        $rows = mysqli_query($link, "SELECT * from preim_ ");
-                        while ($preim = mysqli_fetch_array($rows)) {
+                        $rows = mysqli_query($link, "SELECT * from edit_cont ");
+                        while ($ed_cont = mysqli_fetch_array($rows)) {
                             echo "<tr>";
-                            // echo "<td class ='abc' onchange='edit_tx();'>" . $preim['title'] . "</td>";
-                            // echo "<td class ='abc' >" . $preim['text'] . "</td>";
-                            // echo "<td class ='abc' onchange=\"edit_tx(" . $preim['ID'] . ", 'title', '".$preim['title']."');\" contenteditable>" . $preim['title'] . "</td>";
-                            echo "<td class ='abc' data-type='title' data-id='" . $preim['ID'] . "' contenteditable>" . $preim['title'] . "</td>";
-                            echo "<td class ='abc' data-type='text' data-id='" . $preim['ID'] . "' contenteditable>" . $preim['text'] . "</td>";
+                            echo "<td class ='abc' data-type='title' data-id='" . $ed_cont['ID'] . "' contenteditable>" . $ed_cont['Title'] . "</td>";
+                            echo "<td class ='abc' data-type='text' data-id='" . $ed_cont['ID'] . "' contenteditable>" . $ed_cont['Text'] . "</td>";
+                            echo "<td class ='abc' data-type='link' data-id='" . $ed_cont['ID'] . "' contenteditable>" . $ed_cont['Link'] . "</td>";                           
+                            echo "<td><img src=\"".$ed_cont['PhotoPath'] ."\"></td>";
                             echo "</tr>";
                         }
                         ?>
                     </tbody>
                 </table>
-                <!-- <h3>Действующие акции</h3> -->
                 <h3>Редактирование фотографий</h3>
                 <center>
-                    <form method="post" enctype="multipart/form-data" action="download_f.php">
-                        <input type="file" name="file"></button>
-                        <input type="submit" value="Загрузить на сервер">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="button" value="Загрузить на сервер" onclick="uploadFile()">
                     </form>
                 </center>
                 <?php
                 $rows = mysqli_query($link, "SELECT * from gallery");
                 while ($ph = mysqli_fetch_array($rows)) {
-                    echo "<img onclick=\"podt(" . $ph['id'] . ");\" title=\"Желаете удалить?\"class=\"adm_gal\" src=\"Resources\\" . $ph['name'] . "." . $ph['type'] . "\">";
+                    echo "<img onclick=\"podt(" . $ph['ID'] . ");\" title=\"Желаете удалить?\"class=\"adm_gal\" src=\"Resources\\" . $ph['Name'] . "." . $ph['Type'] . "\">";
                 }
                 ?>
             </div>
+
         </div>
     </div>
     <?php require_once ('footer.php'); ?>
 
-</body>
-
+</body> 
 </html>
 <script language='javascript'>
 
-    $(function () {
-        $('.abc').keypress(function (e) {
-            if (e.which == 13) return false;
-            var oldVal, newVal, type, id;
-            $('.abc').focus(function () {
-                oldVal = $(this).text();
-                id = $(this).data('id');
-                type = $(this).data('type');
-                console.log( id,  type, newVal);
-            }).blur(function () {
-                newVal = $(this).text();
-                if (newVal != oldVal) { 
-                    
-                    $.ajax({
-                        url: 'edit_tx.php',         /* Куда отправить запрос */
-                        method: 'post',
-                        async: false,             /* Метод запроса (post или get) */
-                        dataType: 'html',          /* Тип данных в ответе (xml, json, script, html). */
-                        data: { id: id, type: type, newVal: newVal },     /* Данные передаваемые в массиве */
-                        success: function (data) {  /* функция которая будет выполнена после успешного запроса.  */
-                            console.log(data);
-                            /* В переменной data содержится ответ от index.php. */
-                        }
-                    });
+$(function () {
+    var oldVal, newVal, type, id;
+
+    $('.abc').focus(function () {
+        oldVal = $(this).text();
+        id = $(this).data('id');
+        type = $(this).data('type');
+    }).blur(function () {
+        newVal = $(this).text();
+        if (newVal != oldVal) {
+            $.ajax({
+                url: 'edit_tx.php',
+                method: 'post',
+                async: false,
+                dataType: 'html',
+                data: { id: id, type: type, newVal: newVal },
+                success: function (response) {
+                    console.log(response);
                 }
             });
-        });
+        }
     });
-    // var a;
-    //     document.querySelectorAll('.abc').forEach(function (element, index) {
-    //         element.ondblclick = function () {
-    //             var val = this.innerHTML;
-    //             var input = document.createElement("input");
-    //             if (index % 2 == 1) input.className = "text";
-    //             else input.className = "title";
-    //             input.value = val;
-    //             input.onblur = function () {
-    //                 var val = this.value;
-    //                 this.parentNode.innerHTML = val;
-    //             };
-    //             this.innerHTML = "";
-    //             this.appendChild(input);
-    //             input.focus();
-    //         };
-    //     });
+
+    $('.abc').keypress(function (e) {
+        if (e.which == 13) return false;
+    });
+});
 
 
     const n = window.sessionStorage.getItem('pan_btn');
@@ -276,11 +266,27 @@ if ($_SESSION['Status'] != 10) {
     document.getElementsByClassName("adm_body")[n].style.display = "block";
 
 
-
     function podt(id) {
-        if (confirm('Желаете удалить фотографию?'))
+        if (confirm('Желаете удалить фотографию?')) {
             window.location.replace("del_gal.php?ID=" + id);
+        }
     };
+    function uploadFile() {
+            var formData = new FormData($('#uploadForm')[0]);
+            $.ajax({
+                url: 'download_f.php',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    alert(response);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Ошибка: ' + textStatus);
+                }
+            });
+        }
 
     function myFunction() {
         var n = document.getElementById("tr_names");
